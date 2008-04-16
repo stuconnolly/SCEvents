@@ -20,6 +20,7 @@
  */
 
 #import "SCEvents.h"
+#import "SCEventListenerProtocol.h"
 
 @interface SCEvents (PrivateAPI)
 
@@ -264,7 +265,11 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[])
 {
+    SCEvents *pathWatcher = [SCEvents sharedPathWatcher];
     
+    if ([[pathWatcher delegate] conformsToProtocol:@protocol(SCEventListenerProtocol)]) {
+        [[pathWatcher delegate] pathWatcher:pathWatcher eventOccurred:nil];
+    }
 }
 
 @end
