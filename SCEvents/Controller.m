@@ -42,7 +42,7 @@
 
 - (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event
 {
-    
+    NSLog(@"Called");
 }
 
 @end

@@ -23,4 +23,72 @@
 
 @implementation SCEvent
 
+// -------------------------------------------------------------------------------
+// eventId
+//
+// Returns the event ID of this event.
+// -------------------------------------------------------------------------------
+- (NSUInteger)eventId
+{
+    return _eventId;
+}
+
+// -------------------------------------------------------------------------------
+// setEventId:
+//
+// Sets the event ID of this event to the supplied ID.
+// -------------------------------------------------------------------------------
+- (void)setEventId:(NSUInteger)eventId
+{
+    if (_eventId != eventId) {
+        _eventId = eventId;
+    }
+}
+
+// -------------------------------------------------------------------------------
+// eventPath
+//
+// Returns the event path of this event.
+// -------------------------------------------------------------------------------
+- (NSString *)eventPath
+{
+    return _eventPath;
+}
+
+// -------------------------------------------------------------------------------
+// setEventPath:
+//
+// Sets the event path of this event to the supplied path.
+// -------------------------------------------------------------------------------
+- (void)setEventPath:(NSString *)eventPath
+{
+    if (_eventPath != eventPath) {
+        _eventPath = eventPath;
+    }
+}
+
+// -------------------------------------------------------------------------------
+// eventFlag
+//
+// Returns the event flag of this event. This is one of the FSEventStreamEventFlags
+// defined in FSEvents.h. See this header for possible constants and there meanings.
+// -------------------------------------------------------------------------------
+- (FSEventStreamEventFlags)eventFlag
+{
+    return _eventFlag;
+}
+
+// -------------------------------------------------------------------------------
+// setEventFlag:
+//
+// Sets the event flag of this event to the supplied flag. Must be one of the 
+// FSEventStreamEventFlags constants defined in FSEvents.h.
+// -------------------------------------------------------------------------------
+- (void)setEventFlag:(FSEventStreamEventFlags)eventFlag
+{
+    if (_eventFlag != eventFlag) {
+        _eventFlag = eventFlag;
+    }
+}
+
 @end

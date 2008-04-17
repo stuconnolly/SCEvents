@@ -20,10 +20,23 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <CoreServices/CoreServices.h>
 
 @interface SCEvent : NSObject 
 {
-
+    NSUInteger _eventId;
+    NSString *_eventPath;
+    
+    FSEventStreamEventFlags _eventFlag;
 }
+
+- (NSUInteger)eventId;
+- (void)setEventId:(NSUInteger)eventId;
+
+- (NSString *)eventPath;
+- (void)setEventPath:(NSString *)eventPath;
+
+- (FSEventStreamEventFlags)eventFlag;
+- (void)setEventFlag:(FSEventStreamEventFlags)eventFlag;
 
 @end
