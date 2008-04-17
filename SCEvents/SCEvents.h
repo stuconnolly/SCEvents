@@ -22,6 +22,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreServices/CoreServices.h>
 
+@class SCEvent;
 @protocol SCPathWatcherProtocol;
 
 @interface SCEvents : NSObject 
@@ -32,6 +33,7 @@
     FSEventStreamRef _eventStream;
     CFTimeInterval _notificationLatency;
     
+    SCEvent *_lastEvent;
     NSMutableArray *_watchedPaths;
 }
 
@@ -43,6 +45,8 @@
 - (void)setDelegate:(id)delgate;
 
 - (BOOL)isWatchingPaths;
+
+- (SCEvent *)getlastEvent;
 
 - (double)notificationLatency;
 - (void)setNotificationLatency:(double)latency;

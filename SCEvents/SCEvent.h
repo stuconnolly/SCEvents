@@ -30,6 +30,10 @@
     FSEventStreamEventFlags _eventFlag;
 }
 
++ (SCEvent *)eventWithEventId:(NSUInteger)eventId eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag;
+
+- (id)initWithEventId:(NSUInteger)eventId eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag;
+
 - (NSUInteger)eventId;
 - (void)setEventId:(NSUInteger)eventId;
 

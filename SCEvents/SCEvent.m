@@ -24,6 +24,33 @@
 @implementation SCEvent
 
 // -------------------------------------------------------------------------------
+// eventWithEventId:eventPath:eventFlag:
+//
+// Returns an initialized instance of SCEvent using the supplied event ID, path 
+// and flag.
+// -------------------------------------------------------------------------------
++ (SCEvent *)eventWithEventId:(NSUInteger)eventId eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag
+{
+    return [[[SCEvent alloc] initWithEventId:eventId eventPath:eventPath eventFlag:eventFlag] autorelease];
+}
+
+// -------------------------------------------------------------------------------
+// initWithEventId:eventPath:eventFlag:
+//
+// Initializes an instance of SCEvent using the supplied event ID, path and flag.
+// -------------------------------------------------------------------------------
+- (id)initWithEventId:(NSUInteger)eventId eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag
+{
+    if ((self = [super init])) {
+        [self setEventId:eventId];
+        [self setEventPath:eventPath];
+        [self setEventFlag:eventFlag];
+    }
+    
+    return self;
+}
+
+// -------------------------------------------------------------------------------
 // eventId
 //
 // Returns the event ID of this event.
@@ -89,6 +116,17 @@
     if (_eventFlag != eventFlag) {
         _eventFlag = eventFlag;
     }
+}
+
+// -------------------------------------------------------------------------------
+// description
+//
+// Provides the string used when printing this object in NSLog, etc. Useful for
+// debugging purposes.
+// -------------------------------------------------------------------------------
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@: eventId = %d, eventPath = %@, eventFlag = %d>", [self className], _eventId, _eventPath, _eventFlag];
 }
 
 @end
