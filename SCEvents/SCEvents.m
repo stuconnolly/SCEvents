@@ -68,16 +68,15 @@ static SCEvents *_sharedPathWatcher = nil;
 }
 
 // -------------------------------------------------------------------------------
-// initWithDelegate
+// init
 //
 // 
 // -------------------------------------------------------------------------------
-- (id)initWithDelegate:(id)delegate
+- (id)init
 {
     if ((self = [super init])) {
         _isWatchingPaths = NO;
         
-        [self setDelegate:delegate];
         [self setNotificationLatency:3.0];
         [self setWatchedPaths:[[NSMutableArray alloc] init]]; 
     }
@@ -218,6 +217,14 @@ static SCEvents *_sharedPathWatcher = nil;
     
     [self setWatchedPaths:paths];
     [self _setupEventsStream];
+    
+    // Schedule the event stream on the supplied run loop
+    FSEventStreamScheduleWithRunLoop(_eventStream, [runLoop getCFRunLoop], kCFRunLoopDefaultMode);
+    
+    // Start the event stream
+    FSEventStreamStart(_eventStream);
+    
+    return YES;
 }
 
 // -------------------------------------------------------------------------------
@@ -237,7 +244,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"%@ { watchedPaths = %@ }", [self className], _watchedPaths];
+    return [NSString stringWithFormat:@"<%@ { watchedPaths = %@ } >", [self className], _watchedPaths];
 }
 
 // -------------------------------------------------------------------------------

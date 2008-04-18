@@ -29,6 +29,8 @@
 {
     SCEvents *events = [SCEvents sharedPathWatcher];
     
+    [events setDelegate:self];
+    
     NSMutableArray *paths = [[NSMutableArray alloc] init];
     
     [paths addObject:@"/Users/stuart/"];

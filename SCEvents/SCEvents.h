@@ -23,11 +23,11 @@
 #import <CoreServices/CoreServices.h>
 
 @class SCEvent;
-@protocol SCPathWatcherProtocol;
+@protocol SCEventListenerProtocol;
 
 @interface SCEvents : NSObject 
 {
-    id <SCPathWatcherProtocol> _delegate;
+    id <SCEventListenerProtocol> _delegate;
     
     BOOL _isWatchingPaths;
     FSEventStreamRef _eventStream;
@@ -38,8 +38,6 @@
 }
 
 + (id)sharedPathWatcher;
-
-- (id)initWithDelegate:(id)delegate;
 
 - (id)delegate;
 - (void)setDelegate:(id)delgate;
