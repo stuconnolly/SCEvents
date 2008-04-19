@@ -37,14 +37,12 @@
     
     [events startWatchingPaths:paths];
     
-    NSLog(@"%@", events);
-    
     [paths release];
 }
 
 - (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event
 {
-    NSLog(@"Called");
+    NSLog(@"%@", event);
 }
 
 @end

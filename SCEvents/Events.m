@@ -30,7 +30,7 @@ int main(int argc, const char *argv[])
     
     [controller setupEventlistener];
     
-    [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate dateWithTimeIntervalSinceNow:120.0]];
+    [[NSRunLoop currentRunLoop] run];
     
     [pool release];
     
