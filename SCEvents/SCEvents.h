@@ -44,7 +44,8 @@
 
 - (BOOL)isWatchingPaths;
 
-- (SCEvent *)getlastEvent;
+- (SCEvent *)lastEvent;
+- (void)setLastEvent:(SCEvent *)event;
 
 - (double)notificationLatency;
 - (void)setNotificationLatency:(double)latency;

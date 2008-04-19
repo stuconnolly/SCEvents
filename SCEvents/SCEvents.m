@@ -37,7 +37,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // sharedPathWatcher
 //
-// 
+// Returns the shared singleton instance of SCEvents.
 // -------------------------------------------------------------------------------
 + (id)sharedPathWatcher
 {
@@ -52,8 +52,6 @@ static SCEvents *_sharedPathWatcher = nil;
 
 // -------------------------------------------------------------------------------
 // allocWithZone:
-//
-// 
 // -------------------------------------------------------------------------------
 + (id)allocWithZone:(NSZone *)zone
 {
@@ -71,7 +69,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // init
 //
-// 
+// Initializes an instance of SCEvents setting its default values.
 // -------------------------------------------------------------------------------
 - (id)init
 {
@@ -103,7 +101,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // delegate
 //
-// 
+// Restuns SCEvents' delegate.
 // -------------------------------------------------------------------------------
 - (id)delegate
 {
@@ -113,7 +111,8 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // setDelegate:
 //
-// 
+// Sets SCEvents' delegate to the supplied object. This object should conform to 
+// the protocol SCEventListernerProtocol.
 // -------------------------------------------------------------------------------
 - (void)setDelegate:(id)delgate
 {
@@ -131,13 +130,26 @@ static SCEvents *_sharedPathWatcher = nil;
 }
 
 // -------------------------------------------------------------------------------
-// getlastEvent
+// lastEvent
 //
 // 
 // -------------------------------------------------------------------------------
-- (SCEvent *)getlastEvent
+- (SCEvent *)lastEvent
 {
     return _lastEvent;
+}
+
+// -------------------------------------------------------------------------------
+// setLastEvent:
+//
+// 
+// -------------------------------------------------------------------------------
+- (void)setLastEvent:(SCEvent *)event
+{
+    if (_lastEvent != event) {
+        [_lastEvent release];
+        _lastEvent = [event retain];
+    }
 }
 
 // -------------------------------------------------------------------------------
@@ -294,7 +306,7 @@ void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo
         }
         
         if (i == (numEvents - 1)) {
-            _lastEvent = event;
+            [pathWatcher setLastEvent:event];
         }
     }
 }
