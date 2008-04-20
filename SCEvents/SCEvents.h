@@ -53,7 +53,8 @@
 - (NSMutableArray *)watchedPaths;
 - (void)setWatchedPaths:(NSMutableArray *)paths;
 
-- (BOOL)flushEventStreamAsynchronously:(BOOL)asynchronously;
+- (BOOL)flushEventStreamSync;
+- (BOOL)flushEventStreamAsync;
 
 - (BOOL)startWatchingPaths:(NSMutableArray *)paths;
 - (BOOL)startWatchingPaths:(NSMutableArray *)paths onRunLoop:(NSRunLoop *)runLoop;

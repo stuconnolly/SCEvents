@@ -26,7 +26,7 @@
 @interface SCEvents (PrivateAPI)
 
 - (void)_setupEventsStream;
-void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[]);
+static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[]);
 
 @end
 
@@ -122,7 +122,8 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // isWatchingPaths
 //
-// 
+// Returns a boolean value indicating whether or not the set paths are currently 
+// being watched (i.e. the event stream is currently running).
 // -------------------------------------------------------------------------------
 - (BOOL)isWatchingPaths
 {
@@ -132,7 +133,9 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // lastEvent
 //
-// 
+// Returns the last event that occurred. This method is supposed to replicate the
+// FSEvents API function FSEventStreamGetLatestEventId but also returns the event
+// path and flag in the form of an instance of SCEvent.
 // -------------------------------------------------------------------------------
 - (SCEvent *)lastEvent
 {
@@ -142,7 +145,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // setLastEvent:
 //
-// 
+// Sets the last event that occurred to the supplied event.
 // -------------------------------------------------------------------------------
 - (void)setLastEvent:(SCEvent *)event
 {
@@ -155,7 +158,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // notificationLatency
 //
-// 
+// Returns the event notification latency in seconds.
 // -------------------------------------------------------------------------------
 - (double)notificationLatency
 {
@@ -165,7 +168,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // setNotificationLatency
 //
-// 
+// Sets the event notification latency to the supplied latency in seconds.
 // -------------------------------------------------------------------------------
 - (void)setNotificationLatency:(double)latency
 {
@@ -177,7 +180,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // watchedPaths
 //
-// 
+// Returns the array of watched paths.
 // -------------------------------------------------------------------------------
 - (NSMutableArray *)watchedPaths
 {
@@ -187,7 +190,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // setWatchedPaths:
 //
-// 
+// Sets the watched paths array to the supplied array of paths.
 // -------------------------------------------------------------------------------
 - (void)setWatchedPaths:(NSMutableArray *)paths
 {
@@ -198,19 +201,43 @@ static SCEvents *_sharedPathWatcher = nil;
 }
 
 // -------------------------------------------------------------------------------
-// flushEventStreamAsynchronously:
+// flushEventStreamSync
 //
-// 
+// Flushes the event stream synchronously by sending events that have already 
+// occurred but not yet delivered.
 // -------------------------------------------------------------------------------
-- (BOOL)flushEventStreamAsynchronously:(BOOL)asynchronously
+- (BOOL)flushEventStreamSync
 {
+    if (!_isWatchingPaths) {
+        return NO;
+    }
     
+    FSEventStreamFlushSync(_eventStream);
+    
+    return YES;
+}
+
+// -------------------------------------------------------------------------------
+// flushEventStreamAsync
+//
+// Flushes the event stream asynchronously by sending events that have already 
+// occurred but not yet delivered.
+// -------------------------------------------------------------------------------
+- (BOOL)flushEventStreamAsync
+{
+    if (!_isWatchingPaths) {
+        return NO;
+    }
+    
+    FSEventStreamFlushAsync(_eventStream);
+    
+    return YES;
 }
 
 // -------------------------------------------------------------------------------
 // startWatchingPaths:
 //
-// 
+// Starts watching the supplied array of paths for events on the current run loop.
 // -------------------------------------------------------------------------------
 - (BOOL)startWatchingPaths:(NSMutableArray *)paths
 {
@@ -220,11 +247,14 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // startWatchingPaths:onRunLoop:
 //
-// 
+// Starts watching the supplied array of paths for events on the supplied run loop.
+// A boolean value is returned to indicate the success of starting the stream. If 
+// there are no paths to watch or the stream is already running then false is
+// returned.
 // -------------------------------------------------------------------------------
 - (BOOL)startWatchingPaths:(NSMutableArray *)paths onRunLoop:(NSRunLoop *)runLoop
 {
-    if ([paths count] == 0) {
+    if (([paths count] == 0) || (_isWatchingPaths)) {
         return NO;
     } 
     
@@ -237,23 +267,37 @@ static SCEvents *_sharedPathWatcher = nil;
     // Start the event stream
     FSEventStreamStart(_eventStream);
     
+    _isWatchingPaths = YES;
+    
     return YES;
 }
 
 // -------------------------------------------------------------------------------
-// stopWatchingPaths:
+// stopWatchingPaths
 //
-// 
+// Stops the event stream from watching the set paths. A boolean value is returned
+// to indicate the success of stopping the stream. False is return if this method 
+// is called when the stream is not running.
 // -------------------------------------------------------------------------------
 - (BOOL)stopWatchingPaths
 {
+    if (!_isWatchingPaths) {
+        return NO;
+    }
     
+    FSEventStreamStop(_eventStream);
+    FSEventStreamInvalidate(_eventStream);
+    
+    _isWatchingPaths = NO;
+    
+    return YES;
 }
 
 // -------------------------------------------------------------------------------
 // description
 //
-// 
+// Provides the string used when printing this object in NSLog, etc. Useful for
+// debugging purposes.
 // -------------------------------------------------------------------------------
 - (NSString *)description
 {
@@ -267,6 +311,7 @@ static SCEvents *_sharedPathWatcher = nil;
 {
     _delegate = nil;
     
+    FSEventStreamRelease(_eventStream);
     [_watchedPaths release], _watchedPaths = nil;
     
     [super dealloc];
@@ -279,7 +324,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // _setupEventsStream
 //
-// 
+// Constructs the events stream.
 // -------------------------------------------------------------------------------
 - (void)_setupEventsStream
 {
@@ -291,9 +336,10 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // _SCEventsCallBack
 //
-// 
+// FSEvents callback function. For each event that occurs an instance of SCEvent
+// is created and passed to the delegate.
 // -------------------------------------------------------------------------------
-void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[])
+static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[])
 {
     int i;
     SCEvents *pathWatcher = [SCEvents sharedPathWatcher];
