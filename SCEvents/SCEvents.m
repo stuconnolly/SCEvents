@@ -337,7 +337,10 @@ static SCEvents *_sharedPathWatcher = nil;
 // _SCEventsCallBack
 //
 // FSEvents callback function. For each event that occurs an instance of SCEvent
-// is created and passed to the delegate.
+// is created and passed to the delegate. The frequency at which this callback is
+// called depends upon the notification latency value. This callback is usually
+// called with more than one event and so mutiple instances SCEvent are created
+// and the delegate notified.
 // -------------------------------------------------------------------------------
 static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[])
 {
