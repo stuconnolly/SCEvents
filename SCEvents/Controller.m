@@ -40,7 +40,7 @@
     
     NSMutableArray *paths = [[[NSMutableArray alloc] init] autorelease];
     
-    [paths addObject:@"/Users/stuart/"];
+    [paths addObject:NSHomeDirectory()];
     
     [events startWatchingPaths:paths];
 }
