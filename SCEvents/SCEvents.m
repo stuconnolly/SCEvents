@@ -348,6 +348,23 @@ static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallB
     SCEvents *pathWatcher = [SCEvents sharedPathWatcher];
     
     for (i = 0; i < numEvents; i++) {
+        
+        /* Please note that we are providing the date for when the event occurred 
+         * because the FSEvents API does not provide us with it. This date however
+         * should not be taken as the date the event actually occurred and more 
+         * appropriatly the date for when it was delivered to this callback function.
+         * Depending on what the notification latency is set to, this means that some
+         * events may have very close event dates because this callback is only called 
+         * once with events that occurred with the latency time.
+         *
+         * To get a more accurate date for when events occur, you could decrease the 
+         * notification latency from its default value. This means that this callback 
+         * will be called more frequently for events that just occur and reduces the
+         * number of events that are subsequntly delivered during one of these calls.
+         * The drawback to this approach however, is the increased resources required
+         * calling this callback more frequently.
+         */
+        
         SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:[(NSArray *)eventPaths objectAtIndex:i] eventFlag:eventFlags[i]];
                           
         if ([[pathWatcher delegate] conformsToProtocol:@protocol(SCEventListenerProtocol)]) {
