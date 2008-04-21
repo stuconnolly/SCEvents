@@ -29,9 +29,9 @@
 // Returns an initialized instance of SCEvent using the supplied event ID, path 
 // and flag.
 // -------------------------------------------------------------------------------
-+ (SCEvent *)eventWithEventId:(NSUInteger)eventId eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag
++ (SCEvent *)eventWithEventId:(NSUInteger)eventId eventDate:(NSDate *)date eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag
 {
-    return [[[SCEvent alloc] initWithEventId:eventId eventPath:eventPath eventFlag:eventFlag] autorelease];
+    return [[[SCEvent alloc] initWithEventId:eventId eventDate:date eventPath:eventPath eventFlag:eventFlag] autorelease];
 }
 
 // -------------------------------------------------------------------------------
@@ -39,10 +39,11 @@
 //
 // Initializes an instance of SCEvent using the supplied event ID, path and flag.
 // -------------------------------------------------------------------------------
-- (id)initWithEventId:(NSUInteger)eventId eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag
+- (id)initWithEventId:(NSUInteger)eventId eventDate:(NSDate *)date eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag
 {
     if ((self = [super init])) {
         [self setEventId:eventId];
+        [self setEventDate:date];
         [self setEventPath:eventPath];
         [self setEventFlag:eventFlag];
     }
@@ -69,6 +70,29 @@
 {
     if (_eventId != eventId) {
         _eventId = eventId;
+    }
+}
+
+// -------------------------------------------------------------------------------
+// eventDate
+//
+// Returns the date of this event.
+// -------------------------------------------------------------------------------
+- (NSDate *)eventDate
+{
+    return _eventDate;
+}
+
+// -------------------------------------------------------------------------------
+// setEventDate:
+//
+// Sets the event date of this event to the supplied date.
+// -------------------------------------------------------------------------------
+- (void)setEventDate:(NSDate *)date
+{
+    if (_eventDate != date) {
+        [_eventDate release];
+        _eventDate = [date retain];
     }
 }
 
@@ -127,6 +151,15 @@
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"<%@ { eventId = %d, eventPath = %@, eventFlag = %d } >", [self className], _eventId, _eventPath, _eventFlag];
+}
+
+// -------------------------------------------------------------------------------
+// dealloc
+// -------------------------------------------------------------------------------
+- (void)dealloc
+{
+    [_eventDate release], _eventDate = nil;
+    [super dealloc];
 }
 
 @end

@@ -25,17 +25,21 @@
 @interface SCEvent : NSObject 
 {
     NSUInteger _eventId;
+    NSDate *_eventDate;
     NSString *_eventPath;
     
     FSEventStreamEventFlags _eventFlag;
 }
 
-+ (SCEvent *)eventWithEventId:(NSUInteger)eventId eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag;
++ (SCEvent *)eventWithEventId:(NSUInteger)eventId eventDate:(NSDate *)date eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag;
 
-- (id)initWithEventId:(NSUInteger)eventId eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag;
+- (id)initWithEventId:(NSUInteger)eventId eventDate:(NSDate *)date eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag;
 
 - (NSUInteger)eventId;
 - (void)setEventId:(NSUInteger)eventId;
+
+- (NSDate *)eventDate;
+- (void)setEventDate:(NSDate *)date;
 
 - (NSString *)eventPath;
 - (void)setEventPath:(NSString *)eventPath;

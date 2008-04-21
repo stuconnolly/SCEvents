@@ -348,7 +348,7 @@ static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallB
     SCEvents *pathWatcher = [SCEvents sharedPathWatcher];
     
     for (i = 0; i < numEvents; i++) {
-        SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventPath:[(NSArray *)eventPaths objectAtIndex:i] eventFlag:eventFlags[i]];
+        SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:[(NSArray *)eventPaths objectAtIndex:i] eventFlag:eventFlags[i]];
                           
         if ([[pathWatcher delegate] conformsToProtocol:@protocol(SCEventListenerProtocol)]) {
             [[pathWatcher delegate] pathWatcher:pathWatcher eventOccurred:event];
