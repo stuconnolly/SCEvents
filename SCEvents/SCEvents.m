@@ -339,7 +339,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // FSEvents callback function. For each event that occurs an instance of SCEvent
 // is created and passed to the delegate. The frequency at which this callback is
 // called depends upon the notification latency value. This callback is usually
-// called with more than one event and so mutiple instances SCEvent are created
+// called with more than one event and so mutiple instances of SCEvent are created
 // and the delegate notified.
 // -------------------------------------------------------------------------------
 static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[])
@@ -355,7 +355,7 @@ static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallB
          * appropriatly the date for when it was delivered to this callback function.
          * Depending on what the notification latency is set to, this means that some
          * events may have very close event dates because this callback is only called 
-         * once with events that occurred with the latency time.
+         * once with events that occurred within the latency time.
          *
          * To get a more accurate date for when events occur, you could decrease the 
          * notification latency from its default value. This means that this callback 

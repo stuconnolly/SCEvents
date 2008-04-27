@@ -48,7 +48,7 @@
 // -------------------------------------------------------------------------------
 // pathWatcher:eventOccurred:
 //
-// This is only method to be implemented to conform to the SCEventListenerProtocol.
+// This is the only method to be implemented to conform to the SCEventListenerProtocol.
 // As this is only an example the event received is simply printed to the console.
 // -------------------------------------------------------------------------------
 - (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event
