@@ -34,7 +34,7 @@
     CFTimeInterval _notificationLatency;
     
     SCEvent *_lastEvent;
-    NSMutableArray *_watchedPaths;
+    NSMutableArray *_watchedPaths, *_excludedPaths;
 }
 
 + (id)sharedPathWatcher;
@@ -52,6 +52,9 @@
 
 - (NSMutableArray *)watchedPaths;
 - (void)setWatchedPaths:(NSMutableArray *)paths;
+
+- (NSMutableArray *)excludedPaths;
+- (void)setExcludedPaths:(NSMutableArray *)paths;
 
 - (BOOL)flushEventStreamSync;
 - (BOOL)flushEventStreamAsync;

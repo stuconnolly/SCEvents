@@ -180,7 +180,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 // watchedPaths
 //
-// Returns the array of watched paths.
+// Returns the array of paths that the client application has chosen to watch.
 // -------------------------------------------------------------------------------
 - (NSMutableArray *)watchedPaths
 {
@@ -197,6 +197,30 @@ static SCEvents *_sharedPathWatcher = nil;
     if (_watchedPaths != paths) {
         [_watchedPaths release];
         _watchedPaths = [paths retain];
+    }
+}
+
+// -------------------------------------------------------------------------------
+// excludedPaths
+//
+// Returns the array of paths that the client application has chosen to ignore
+// events from.
+// -------------------------------------------------------------------------------
+- (NSMutableArray *)excludedPaths
+{
+    return _excludedPaths;
+}
+
+// -------------------------------------------------------------------------------
+// setExcludedPaths:
+//
+// Sets the excluded paths array to the supplied array of paths.
+// -------------------------------------------------------------------------------
+- (void)setExcludedPaths:(NSMutableArray *)paths
+{
+    if (_excludedPaths != paths) {
+        [_excludedPaths release];
+        _excludedPaths = [paths retain];
     }
 }
 
@@ -365,14 +389,19 @@ static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallB
          * calling this callback more frequently.
          */
         
-        SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:[(NSArray *)eventPaths objectAtIndex:i] eventFlag:eventFlags[i]];
-                          
-        if ([[pathWatcher delegate] conformsToProtocol:@protocol(SCEventListenerProtocol)]) {
-            [[pathWatcher delegate] pathWatcher:pathWatcher eventOccurred:event];
-        }
+        NSString *eventPath = [[(NSArray *)eventPaths objectAtIndex:i] substringToIndex:([[(NSArray *)eventPaths objectAtIndex:i] length] - 1)];
         
-        if (i == (numEvents - 1)) {
-            [pathWatcher setLastEvent:event];
+        // Only notify the delegate of the event if the event path is not in the exclude list
+        if (![[pathWatcher excludedPaths] containsObject:eventPath]) {
+            SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:eventPath eventFlag:eventFlags[i]];
+              
+            if ([[pathWatcher delegate] conformsToProtocol:@protocol(SCEventListenerProtocol)]) {
+                [[pathWatcher delegate] pathWatcher:pathWatcher eventOccurred:event];
+            }
+              
+            if (i == (numEvents - 1)) {
+                [pathWatcher setLastEvent:event];
+            }
         }
     }
 }
