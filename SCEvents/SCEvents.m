@@ -325,7 +325,7 @@ static SCEvents *_sharedPathWatcher = nil;
 // -------------------------------------------------------------------------------
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@ { watchedPaths = %@ } >", [self className], _watchedPaths];
+    return [NSString stringWithFormat:@"<%@ { watchedPaths = %@, excludedPaths = %@ } >", [self className], _watchedPaths, _excludedPaths];
 }
 
 // -------------------------------------------------------------------------------
