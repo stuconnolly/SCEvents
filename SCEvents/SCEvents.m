@@ -336,7 +336,9 @@ static SCEvents *_sharedPathWatcher = nil;
     _delegate = nil;
     
     FSEventStreamRelease(_eventStream);
+    
     [_watchedPaths release], _watchedPaths = nil;
+    [_excludedPaths release], _excludedPaths = nil;
     
     [super dealloc];
 }
