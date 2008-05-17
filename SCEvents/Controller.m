@@ -38,14 +38,10 @@
     
     [events setDelegate:self];
     
-    NSMutableArray *paths = [[[NSMutableArray alloc] init] autorelease];
-    NSMutableArray *excludePaths = [[[NSMutableArray alloc] init] autorelease];
-    
-    [paths addObject:NSHomeDirectory()];
-    [excludePaths addObject:[NSHomeDirectory() stringByAppendingString:@"/Library/Preferences"]];
+    NSMutableArray *paths = [NSMutableArray arrayWithObject:NSHomeDirectory()];
+    NSMutableArray *excludePaths = [NSMutableArray arrayWithObject:[NSHomeDirectory() stringByAppendingString:@"/Library/Preferences"]];
     
     [events setExcludedPaths:excludePaths];
-    
     [events startWatchingPaths:paths];
 }
 
