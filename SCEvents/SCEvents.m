@@ -77,7 +77,7 @@ static SCEvents *_sharedPathWatcher = nil;
         _isWatchingPaths = NO;
         
         [self setNotificationLatency:3.0];
-        [self setWatchedPaths:[[NSMutableArray alloc] init]]; 
+        [self setIgnoreEeventsFromSubDirs:YES]; 
     }
     
     return self;
@@ -128,6 +128,30 @@ static SCEvents *_sharedPathWatcher = nil;
 - (BOOL)isWatchingPaths
 {
     return _isWatchingPaths;
+}
+
+// -------------------------------------------------------------------------------
+// ignoreEventsFromSubDirs
+//
+// Returns a boolean value indicating whether or not events from sub-directories
+// of the registered paths to exclude should also be ignored.
+// -------------------------------------------------------------------------------
+- (BOOL)ignoreEventsFromSubDirs
+{
+    return _ignoreEventsFromSubDirs;
+}
+
+// -------------------------------------------------------------------------------
+// setIgnoreEeventsFromSubDirs:
+//
+// Sets whether or not events from sub-directories of the registered paths to 
+// exclude should also be ignored based on the supplied values.
+// -------------------------------------------------------------------------------
+- (void)setIgnoreEeventsFromSubDirs:(BOOL)ignore
+{
+    if (_ignoreEventsFromSubDirs != ignore) {
+        _ignoreEventsFromSubDirs = ignore;
+    }
 }
 
 // -------------------------------------------------------------------------------
@@ -371,6 +395,8 @@ static SCEvents *_sharedPathWatcher = nil;
 static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[])
 {
     int i;
+    BOOL shouldIgnore = NO;
+    
     SCEvents *pathWatcher = [SCEvents sharedPathWatcher];
     
     for (i = 0; i < numEvents; i++) {
@@ -391,16 +417,25 @@ static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallB
          * calling this callback more frequently.
          */
         
-        NSString *eventPath = [[(NSArray *)eventPaths objectAtIndex:i] substringToIndex:([[(NSArray *)eventPaths objectAtIndex:i] length] - 1)];
-        
-        // Only notify the delegate of the event if the event path is not in the exclude list
-        if (![[pathWatcher excludedPaths] containsObject:eventPath]) {
+        if ([pathWatcher ignoreEventsFromSubDirs]) {
+            // Check to see if the event should be ignored if the event path is in the include list
+            for (NSString *path in [pathWatcher excludedPaths]) {
+                if ([[(NSArray *)eventPaths objectAtIndex:i] hasPrefix:path]) {
+                    shouldIgnore = YES;
+                    break;
+                }
+            }
+        }
+    
+        if (!shouldIgnore) {
+            NSString *eventPath = [[(NSArray *)eventPaths objectAtIndex:i] substringToIndex:([[(NSArray *)eventPaths objectAtIndex:i] length] - 1)];
+            
             SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:eventPath eventFlag:eventFlags[i]];
-              
+                
             if ([[pathWatcher delegate] conformsToProtocol:@protocol(SCEventListenerProtocol)]) {
                 [[pathWatcher delegate] pathWatcher:pathWatcher eventOccurred:event];
             }
-              
+                
             if (i == (numEvents - 1)) {
                 [pathWatcher setLastEvent:event];
             }

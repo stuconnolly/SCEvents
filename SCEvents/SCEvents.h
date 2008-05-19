@@ -30,6 +30,7 @@
     id <SCEventListenerProtocol> _delegate;
     
     BOOL _isWatchingPaths;
+    BOOL _ignoreEventsFromSubDirs;
     FSEventStreamRef _eventStream;
     CFTimeInterval _notificationLatency;
     
@@ -43,6 +44,9 @@
 - (void)setDelegate:(id)delgate;
 
 - (BOOL)isWatchingPaths;
+
+- (BOOL)ignoreEventsFromSubDirs;
+- (void)setIgnoreEeventsFromSubDirs:(BOOL)ignore;
 
 - (SCEvent *)lastEvent;
 - (void)setLastEvent:(SCEvent *)event;
