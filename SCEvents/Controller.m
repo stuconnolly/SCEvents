@@ -39,7 +39,7 @@
     [events setDelegate:self];
     
     NSMutableArray *paths = [NSMutableArray arrayWithObject:NSHomeDirectory()];
-    NSMutableArray *excludePaths = [NSMutableArray arrayWithObject:[NSHomeDirectory() stringByAppendingString:@"/Library/Preferences"]];
+    NSMutableArray *excludePaths = [NSMutableArray arrayWithObject:[NSHomeDirectory() stringByAppendingString:@"/Downloads"]];
     
     [events setExcludedPaths:excludePaths];
     [events startWatchingPaths:paths];

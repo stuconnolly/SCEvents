@@ -20,7 +20,6 @@
  */
 
 #import <Foundation/Foundation.h>
-#import <CoreServices/CoreServices.h>
 
 #import "SCEventListenerProtocol.h"
 

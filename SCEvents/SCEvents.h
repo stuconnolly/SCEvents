@@ -27,15 +27,16 @@
 
 @interface SCEvents : NSObject 
 {
-    id <SCEventListenerProtocol> _delegate;
+    id <SCEventListenerProtocol> _delegate;     // The delegate that SCEvents is to notify of events that occur.
     
-    BOOL _isWatchingPaths;
-    BOOL _ignoreEventsFromSubDirs;
-    FSEventStreamRef _eventStream;
-    CFTimeInterval _notificationLatency;
-    
-    SCEvent *_lastEvent;
-    NSMutableArray *_watchedPaths, *_excludedPaths;
+    BOOL              _isWatchingPaths;         // Is the events stream currently running.
+    BOOL              _ignoreEventsFromSubDirs; // Ignore events from sub-directories of the excluded paths. Defaults to YES.
+    FSEventStreamRef  _eventStream;             // The actual FSEvents stream reference.
+    CFTimeInterval    _notificationLatency;     // The latency time of which SCEvents is notified by FSEvents of events. Defaults to 3 seconds.
+      
+    SCEvent          *_lastEvent;               // The last event that occurred and that was delivered to the delegate.
+    NSMutableArray   *_watchedPaths;            // The paths that are to be watched for events.
+    NSMutableArray   *_excludedPaths;           // The paths that SCEvents should ignore events from and not deliver to the delegate.
 }
 
 + (id)sharedPathWatcher;
