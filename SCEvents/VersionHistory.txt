@@ -1,0 +1,11 @@
+SCEVENTS VERSION HISTORY
+------------------------
+
+VERSION 0.1.2 (build 26)
+Released on May 24, 2008
+    - [FIX] Events not be ignored properly even though their paths are in the exclude list.
+    - [NEW] The ability to enable or disable the behaviour of ignoring events from sub-directories of paths to ignore events from. 
+
+VERSION 0.1.1 (build 22)
+Released on May 17, 2008
+    - [NEW] The ability to ignore events from specific directories.
