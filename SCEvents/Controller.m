@@ -40,7 +40,7 @@
 // The event stream is started by calling startWatchingPaths: while passing the paths
 // to be watched.
 // -------------------------------------------------------------------------------
-- (void)setupEventlistener
+- (void)setupEventListener
 {
     SCEvents *events = [SCEvents sharedPathWatcher];
     

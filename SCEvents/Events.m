@@ -47,7 +47,7 @@ int main(int argc, const char *argv[])
     
     Controller *controller = [[[Controller alloc] init] autorelease];
     
-    [controller setupEventlistener];
+    [controller setupEventListener];
     
     [[NSRunLoop currentRunLoop] run];
     

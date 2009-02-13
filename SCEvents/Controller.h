@@ -33,6 +33,6 @@
 
 @interface Controller : NSObject <SCEventListenerProtocol>
 
-- (void)setupEventlistener;
+- (void)setupEventListener;
 
 @end
