@@ -3,7 +3,8 @@
  *
  *  SCEvents
  *
- *  Copyright (c) 2008 Stuart Connolly
+ *  Copyright (c) 2009 Stuart Connolly
+ *  http://stuconnolly.com/projects/source-code/
  *
  *  Permission is hereby granted, free of charge, to any person
  *  obtaining a copy of this software and associated documentation
