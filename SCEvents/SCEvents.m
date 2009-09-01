@@ -97,7 +97,7 @@ static SCEvents *_sharedPathWatcher = nil;
 
 - (id)retain { return self; }
 
-- (unsigned)retainCount { return UINT_MAX; }
+- (NSUInteger)retainCount { return NSUIntegerMax; }
 
 - (id)autorelease { return self; }
 

@@ -137,7 +137,7 @@
  */
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ { eventId = %d, eventPath = %@, eventFlag = %d } >", [self className], _eventId, _eventPath, _eventFlag];
+	return [NSString stringWithFormat:@"<%@ { eventId = %ld, eventPath = %@, eventFlag = %ld } >", [self className], (unsigned long)_eventId, _eventPath, (unsigned long)_eventFlag];
 }
 
 /**
