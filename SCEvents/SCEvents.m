@@ -43,11 +43,9 @@ static SCEvents *_sharedPathWatcher = nil;
 
 @implementation SCEvents
 
-// -------------------------------------------------------------------------------
-// sharedPathWatcher
-//
-// Returns the shared singleton instance of SCEvents.
-// -------------------------------------------------------------------------------
+/**
+ * Returns the shared singleton instance of SCEvents.
+ */
 + (id)sharedPathWatcher
 {
     @synchronized(self) {
@@ -59,9 +57,9 @@ static SCEvents *_sharedPathWatcher = nil;
     return _sharedPathWatcher;
 }
 
-// -------------------------------------------------------------------------------
-// allocWithZone:
-// -------------------------------------------------------------------------------
+/**
+ * allocWithZone:
+ */
 + (id)allocWithZone:(NSZone *)zone
 {
     @synchronized(self) {
@@ -75,11 +73,9 @@ static SCEvents *_sharedPathWatcher = nil;
     return nil; // On subsequent allocation attempts return nil
 }
 
-// -------------------------------------------------------------------------------
-// init
-//
-// Initializes an instance of SCEvents setting its default values.
-// -------------------------------------------------------------------------------
+/**
+ * Initializes an instance of SCEvents setting its default values.
+ */
 - (id)init
 {
     if ((self = [super init])) {
@@ -92,10 +88,10 @@ static SCEvents *_sharedPathWatcher = nil;
     return self;
 }
 
-//---------------------------------------------------------------
-// The following base protocol methods are implemented to ensure
-// the singleton status of this class.
-//--------------------------------------------------------------- 
+/**
+ * The following base protocol methods are implemented to ensure
+ * the singleton status of this class.
+ */ 
 
 - (id)copyWithZone:(NSZone *)zone { return self; }
 
@@ -107,55 +103,45 @@ static SCEvents *_sharedPathWatcher = nil;
 
 - (void)release { }
 
-// -------------------------------------------------------------------------------
-// delegate
-//
-// Restuns SCEvents' delegate.
-// -------------------------------------------------------------------------------
+/**
+ * Restuns SCEvents' delegate.
+ */
 - (id)delegate
 {
     return _delegate;
 }
 
-// -------------------------------------------------------------------------------
-// setDelegate:
-//
-// Sets SCEvents' delegate to the supplied object. This object should conform to 
-// the protocol SCEventListernerProtocol.
-// -------------------------------------------------------------------------------
+/**
+ * Sets SCEvents' delegate to the supplied object. This object should conform to 
+ * the protocol SCEventListernerProtocol.
+ */
 - (void)setDelegate:(id)delgate
 {
     _delegate = delgate;
 }
 
-// -------------------------------------------------------------------------------
-// isWatchingPaths
-//
-// Returns a boolean value indicating whether or not the set paths are currently 
-// being watched (i.e. the event stream is currently running).
-// -------------------------------------------------------------------------------
+/**
+ * Returns a boolean value indicating whether or not the set paths are currently 
+ * being watched (i.e. the event stream is currently running).
+ */
 - (BOOL)isWatchingPaths
 {
     return _isWatchingPaths;
 }
 
-// -------------------------------------------------------------------------------
-// ignoreEventsFromSubDirs
-//
-// Returns a boolean value indicating whether or not events from sub-directories
-// of the registered paths to exclude should also be ignored.
-// -------------------------------------------------------------------------------
+/**
+ * Returns a boolean value indicating whether or not events from sub-directories
+ * of the registered paths to exclude should also be ignored.
+ */
 - (BOOL)ignoreEventsFromSubDirs
 {
     return _ignoreEventsFromSubDirs;
 }
 
-// -------------------------------------------------------------------------------
-// setIgnoreEeventsFromSubDirs:
-//
-// Sets whether or not events from sub-directories of the registered paths to 
-// exclude should also be ignored based on the supplied values.
-// -------------------------------------------------------------------------------
+/**
+ * Sets whether or not events from sub-directories of the registered paths to 
+ * exclude should also be ignored based on the supplied values.
+ */
 - (void)setIgnoreEeventsFromSubDirs:(BOOL)ignore
 {
     if (_ignoreEventsFromSubDirs != ignore) {
@@ -163,23 +149,19 @@ static SCEvents *_sharedPathWatcher = nil;
     }
 }
 
-// -------------------------------------------------------------------------------
-// lastEvent
-//
-// Returns the last event that occurred. This method is supposed to replicate the
-// FSEvents API function FSEventStreamGetLatestEventId but also returns the event
-// path and flag in the form of an instance of SCEvent.
-// -------------------------------------------------------------------------------
+/**
+ * Returns the last event that occurred. This method is supposed to replicate the
+ * FSEvents API function FSEventStreamGetLatestEventId but also returns the event
+ * path and flag in the form of an instance of SCEvent.
+ */
 - (SCEvent *)lastEvent
 {
     return _lastEvent;
 }
 
-// -------------------------------------------------------------------------------
-// setLastEvent:
-//
-// Sets the last event that occurred to the supplied event.
-// -------------------------------------------------------------------------------
+/**
+ * Sets the last event that occurred to the supplied event.
+ */
 - (void)setLastEvent:(SCEvent *)event
 {
     if (_lastEvent != event) {
@@ -188,21 +170,17 @@ static SCEvents *_sharedPathWatcher = nil;
     }
 }
 
-// -------------------------------------------------------------------------------
-// notificationLatency
-//
-// Returns the event notification latency in seconds.
-// -------------------------------------------------------------------------------
+/**
+ * Returns the event notification latency in seconds.
+ */
 - (double)notificationLatency
 {
     return _notificationLatency;
 }
 
-// -------------------------------------------------------------------------------
-// setNotificationLatency
-//
-// Sets the event notification latency to the supplied latency in seconds.
-// -------------------------------------------------------------------------------
+/**
+ * Sets the event notification latency to the supplied latency in seconds.
+ */
 - (void)setNotificationLatency:(double)latency
 {
     if (_notificationLatency != latency) {
@@ -210,21 +188,17 @@ static SCEvents *_sharedPathWatcher = nil;
     }
 }
 
-// -------------------------------------------------------------------------------
-// watchedPaths
-//
-// Returns the array of paths that the client application has chosen to watch.
-// -------------------------------------------------------------------------------
+/**
+ * Returns the array of paths that the client application has chosen to watch.
+ */
 - (NSMutableArray *)watchedPaths
 {
     return _watchedPaths;
 }
 
-// -------------------------------------------------------------------------------
-// setWatchedPaths:
-//
-// Sets the watched paths array to the supplied array of paths.
-// -------------------------------------------------------------------------------
+/**
+ * Sets the watched paths array to the supplied array of paths.
+ */
 - (void)setWatchedPaths:(NSMutableArray *)paths
 {
     if (_watchedPaths != paths) {
@@ -233,22 +207,18 @@ static SCEvents *_sharedPathWatcher = nil;
     }
 }
 
-// -------------------------------------------------------------------------------
-// excludedPaths
-//
-// Returns the array of paths that the client application has chosen to ignore
-// events from.
-// -------------------------------------------------------------------------------
+/**
+ * Returns the array of paths that the client application has chosen to ignore
+ * events from.
+ */
 - (NSMutableArray *)excludedPaths
 {
     return _excludedPaths;
 }
 
-// -------------------------------------------------------------------------------
-// setExcludedPaths:
-//
-// Sets the excluded paths array to the supplied array of paths.
-// -------------------------------------------------------------------------------
+/**
+ * Sets the excluded paths array to the supplied array of paths.
+ */
 - (void)setExcludedPaths:(NSMutableArray *)paths
 {
     if (_excludedPaths != paths) {
@@ -257,12 +227,10 @@ static SCEvents *_sharedPathWatcher = nil;
     }
 }
 
-// -------------------------------------------------------------------------------
-// flushEventStreamSync
-//
-// Flushes the event stream synchronously by sending events that have already 
-// occurred but not yet delivered.
-// -------------------------------------------------------------------------------
+/**
+ * Flushes the event stream synchronously by sending events that have already 
+ * occurred but not yet delivered.
+ */
 - (BOOL)flushEventStreamSync
 {
     if (!_isWatchingPaths) {
@@ -274,12 +242,10 @@ static SCEvents *_sharedPathWatcher = nil;
     return YES;
 }
 
-// -------------------------------------------------------------------------------
-// flushEventStreamAsync
-//
-// Flushes the event stream asynchronously by sending events that have already 
-// occurred but not yet delivered.
-// -------------------------------------------------------------------------------
+/**
+ * Flushes the event stream asynchronously by sending events that have already 
+ * occurred but not yet delivered.
+ */
 - (BOOL)flushEventStreamAsync
 {
     if (!_isWatchingPaths) {
@@ -291,24 +257,20 @@ static SCEvents *_sharedPathWatcher = nil;
     return YES;
 }
 
-// -------------------------------------------------------------------------------
-// startWatchingPaths:
-//
-// Starts watching the supplied array of paths for events on the current run loop.
-// -------------------------------------------------------------------------------
+/**
+ * Starts watching the supplied array of paths for events on the current run loop.
+ */
 - (BOOL)startWatchingPaths:(NSMutableArray *)paths
 {
     return [self startWatchingPaths:paths onRunLoop:[NSRunLoop currentRunLoop]];
 }
 
-// -------------------------------------------------------------------------------
-// startWatchingPaths:onRunLoop:
-//
-// Starts watching the supplied array of paths for events on the supplied run loop.
-// A boolean value is returned to indicate the success of starting the stream. If 
-// there are no paths to watch or the stream is already running then false is
-// returned.
-// -------------------------------------------------------------------------------
+/**
+ * Starts watching the supplied array of paths for events on the supplied run loop.
+ * A boolean value is returned to indicate the success of starting the stream. If 
+ * there are no paths to watch or the stream is already running then false is
+ * returned.
+ */
 - (BOOL)startWatchingPaths:(NSMutableArray *)paths onRunLoop:(NSRunLoop *)runLoop
 {
     if (([paths count] == 0) || (_isWatchingPaths)) {
@@ -329,13 +291,11 @@ static SCEvents *_sharedPathWatcher = nil;
     return YES;
 }
 
-// -------------------------------------------------------------------------------
-// stopWatchingPaths
-//
-// Stops the event stream from watching the set paths. A boolean value is returned
-// to indicate the success of stopping the stream. False is return if this method 
-// is called when the stream is not running.
-// -------------------------------------------------------------------------------
+/**
+ * Stops the event stream from watching the set paths. A boolean value is returned
+ * to indicate the success of stopping the stream. False is return if this method 
+ * is called when the stream is not running.
+ */
 - (BOOL)stopWatchingPaths
 {
     if (!_isWatchingPaths) {
@@ -350,20 +310,18 @@ static SCEvents *_sharedPathWatcher = nil;
     return YES;
 }
 
-// -------------------------------------------------------------------------------
-// description
-//
-// Provides the string used when printing this object in NSLog, etc. Useful for
-// debugging purposes.
-// -------------------------------------------------------------------------------
+/**
+ * Provides the string used when printing this object in NSLog, etc. Useful for
+ * debugging purposes.
+ */
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"<%@ { watchedPaths = %@, excludedPaths = %@ } >", [self className], _watchedPaths, _excludedPaths];
 }
 
-// -------------------------------------------------------------------------------
-// dealloc
-// -------------------------------------------------------------------------------
+/**
+ * dealloc
+ */
 - (void)dealloc
 {
     _delegate = nil;
@@ -380,11 +338,9 @@ static SCEvents *_sharedPathWatcher = nil;
 
 @implementation SCEvents (PrivateAPI)
 
-// -------------------------------------------------------------------------------
-// _setupEventsStream
-//
-// Constructs the events stream.
-// -------------------------------------------------------------------------------
+/**
+ * Constructs the events stream.
+ */
 - (void)_setupEventsStream
 {
     void *callbackInfo = NULL;
@@ -392,18 +348,16 @@ static SCEvents *_sharedPathWatcher = nil;
     _eventStream = FSEventStreamCreate(kCFAllocatorDefault, &_SCEventsCallBack, callbackInfo, (CFArrayRef)_watchedPaths, kFSEventStreamEventIdSinceNow, _notificationLatency, kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagWatchRoot);
 }
 
-// -------------------------------------------------------------------------------
-// _SCEventsCallBack
-//
-// FSEvents callback function. For each event that occurs an instance of SCEvent
-// is created and passed to the delegate. The frequency at which this callback is
-// called depends upon the notification latency value. This callback is usually
-// called with more than one event and so mutiple instances of SCEvent are created
-// and the delegate notified.
-// -------------------------------------------------------------------------------
+/**
+ * FSEvents callback function. For each event that occurs an instance of SCEvent
+ * is created and passed to the delegate. The frequency at which this callback is
+ * called depends upon the notification latency value. This callback is usually
+ * called with more than one event and so mutiple instances of SCEvent are created
+ * and the delegate notified.
+ */
 static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[])
 {
-    int i;
+    NSUInteger i;
     BOOL shouldIgnore = NO;
     
     SCEvents *pathWatcher = [SCEvents sharedPathWatcher];
@@ -429,7 +383,7 @@ static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallB
         NSString *eventPath = [(NSArray *)eventPaths objectAtIndex:i];
         NSMutableArray *excludedPaths = [pathWatcher excludedPaths];
         
-        // Check to see if the event should be ignored if the event path is in the exclude list
+        // Check to see if the event should be ignored if it's path is in the exclude list
         if ([excludedPaths containsObject:eventPath]) {
             shouldIgnore = YES;
         }

@@ -34,13 +34,11 @@
 
 @implementation Controller
 
-// -------------------------------------------------------------------------------
-// setupEventlistener
-//
-// Sets up the event listener using SCEvents and sets its delegate to this controller.
-// The event stream is started by calling startWatchingPaths: while passing the paths
-// to be watched.
-// -------------------------------------------------------------------------------
+/**
+ * Sets up the event listener using SCEvents and sets its delegate to this controller.
+ * The event stream is started by calling startWatchingPaths: while passing the paths
+ * to be watched.
+ */
 - (void)setupEventListener
 {
     SCEvents *events = [SCEvents sharedPathWatcher];
@@ -54,12 +52,10 @@
     [events startWatchingPaths:paths];
 }
 
-// -------------------------------------------------------------------------------
-// pathWatcher:eventOccurred:
-//
-// This is the only method to be implemented to conform to the SCEventListenerProtocol.
-// As this is only an example the event received is simply printed to the console.
-// -------------------------------------------------------------------------------
+/**
+ * This is the only method to be implemented to conform to the SCEventListenerProtocol.
+ * As this is only an example the event received is simply printed to the console.
+ */
 - (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event
 {
     NSLog(@"%@", event);
