@@ -1,7 +1,7 @@
 SCEVENTS VERSION HISTORY
 ------------------------
 
-VERSION 0.1.3 (build 37)
+VERSION 0.1.3 (build 39)
 Released on September 9, 2009
     - [NEW] General code tidy up including the use of Objective-C 2.0 properties.
 
