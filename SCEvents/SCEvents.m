@@ -173,7 +173,7 @@ static SCEvents *_sharedPathWatcher = nil;
 /**
  * Stops the event stream from watching the set paths. A boolean value is returned
  * to indicate the success of stopping the stream. False is return if this method 
- * is called when the stream is not running.
+ * is called when the stream is not already running.
  */
 - (BOOL)stopWatchingPaths
 {
@@ -236,7 +236,7 @@ static SCEvents *_sharedPathWatcher = nil;
  * FSEvents callback function. For each event that occurs an instance of SCEvent
  * is created and passed to the delegate. The frequency at which this callback is
  * called depends upon the notification latency value. This callback is usually
- * called with more than one event and so mutiple instances of SCEvent are created
+ * called with more than one event and so multiple instances of SCEvent are created
  * and the delegate notified.
  */
 static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[])
