@@ -32,103 +32,33 @@
 
 @implementation SCEvent
 
+@synthesize eventId;
+@synthesize eventDate;
+@synthesize eventPath;
+@synthesize eventFlag;
+
 /**
  * Returns an initialized instance of SCEvent using the supplied event ID, path 
  * and flag.
  */
-+ (SCEvent *)eventWithEventId:(NSUInteger)eventId eventDate:(NSDate *)date eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag
++ (SCEvent *)eventWithEventId:(NSUInteger)identifier eventDate:(NSDate *)date eventPath:(NSString *)path eventFlag:(FSEventStreamEventFlags)flag
 {
-    return [[[SCEvent alloc] initWithEventId:eventId eventDate:date eventPath:eventPath eventFlag:eventFlag] autorelease];
+    return [[[SCEvent alloc] initWithEventId:identifier eventDate:date eventPath:path eventFlag:flag] autorelease];
 }
 
 /**
  * Initializes an instance of SCEvent using the supplied event ID, path and flag.
  */
-- (id)initWithEventId:(NSUInteger)eventId eventDate:(NSDate *)date eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag
+- (id)initWithEventId:(NSUInteger)identifier eventDate:(NSDate *)date eventPath:(NSString *)path eventFlag:(FSEventStreamEventFlags)flag
 {
     if ((self = [super init])) {
-        [self setEventId:eventId];
+        [self setEventId:identifier];
         [self setEventDate:date];
-        [self setEventPath:eventPath];
-        [self setEventFlag:eventFlag];
+        [self setEventPath:path];
+        [self setEventFlag:flag];
     }
     
     return self;
-}
-
-/**
- * Returns the event ID of this event.
- */
-- (NSUInteger)eventId
-{
-    return _eventId;
-}
-
-/**
- * Sets the event ID of this event to the supplied ID.
- */
-- (void)setEventId:(NSUInteger)eventId
-{
-    if (_eventId != eventId) {
-        _eventId = eventId;
-    }
-}
-
-/**
- * Returns the date of this event.
- */
-- (NSDate *)eventDate
-{
-    return _eventDate;
-}
-
-/**
- * Sets the event date of this event to the supplied date.
- */
-- (void)setEventDate:(NSDate *)date
-{
-    if (_eventDate != date) {
-        [_eventDate release];
-        _eventDate = [date retain];
-    }
-}
-
-/**
- * Returns the event path of this event.
- */
-- (NSString *)eventPath
-{
-    return _eventPath;
-}
-
-/**
- * Sets the event path of this event to the supplied path.
- */
-- (void)setEventPath:(NSString *)eventPath
-{
-    if (_eventPath != eventPath) {
-        _eventPath = eventPath;
-    }
-}
-
-/**
- *Returns the event flag of this event. This is one of the FSEventStreamEventFlags
- * defined in FSEvents.h. See this header for possible constants and there meanings.
- */
-- (FSEventStreamEventFlags)eventFlag
-{
-    return _eventFlag;
-}
-
-/**
- * Sets the event flag of this event to the supplied flag. Must be one of the 
- * FSEventStreamEventFlags constants defined in FSEvents.h.
- */
-- (void)setEventFlag:(FSEventStreamEventFlags)eventFlag
-{
-    if (_eventFlag != eventFlag) {
-        _eventFlag = eventFlag;
-    }
 }
 
 /**
@@ -137,7 +67,7 @@
  */
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ { eventId = %ld, eventPath = %@, eventFlag = %ld } >", [self className], (unsigned long)_eventId, _eventPath, (unsigned long)_eventFlag];
+	return [NSString stringWithFormat:@"<%@ { eventId = %ld, eventPath = %@, eventFlag = %ld } >", [self className], ((unsigned long)eventId), [self eventPath], ((unsigned long)eventFlag)];
 }
 
 /**
@@ -145,7 +75,7 @@
  */
 - (void)dealloc
 {
-    [_eventDate release], _eventDate = nil;
+    [eventDate release], eventDate = nil;
 	
     [super dealloc];
 }

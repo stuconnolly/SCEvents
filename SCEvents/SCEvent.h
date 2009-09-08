@@ -33,27 +33,19 @@
 
 @interface SCEvent : NSObject 
 {
-    NSUInteger _eventId;
-    NSDate *_eventDate;
-    NSString *_eventPath;
-    
-    FSEventStreamEventFlags _eventFlag;
+    NSUInteger eventId;
+    NSDate *eventDate;
+    NSString *eventPath;
+    FSEventStreamEventFlags eventFlag;
 }
 
-+ (SCEvent *)eventWithEventId:(NSUInteger)eventId eventDate:(NSDate *)date eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag;
+@property (readwrite, assign) NSUInteger eventId;
+@property (readwrite, retain) NSDate *eventDate;
+@property (readwrite, retain) NSString *eventPath;
+@property (readwrite, assign) FSEventStreamEventFlags eventFlag;
 
-- (id)initWithEventId:(NSUInteger)eventId eventDate:(NSDate *)date eventPath:(NSString *)eventPath eventFlag:(FSEventStreamEventFlags)eventFlag;
++ (SCEvent *)eventWithEventId:(NSUInteger)identifier eventDate:(NSDate *)date eventPath:(NSString *)path eventFlag:(FSEventStreamEventFlags)flag;
 
-- (NSUInteger)eventId;
-- (void)setEventId:(NSUInteger)eventId;
-
-- (NSDate *)eventDate;
-- (void)setEventDate:(NSDate *)date;
-
-- (NSString *)eventPath;
-- (void)setEventPath:(NSString *)eventPath;
-
-- (FSEventStreamEventFlags)eventFlag;
-- (void)setEventFlag:(FSEventStreamEventFlags)eventFlag;
+- (id)initWithEventId:(NSUInteger)identifier eventDate:(NSDate *)date eventPath:(NSString *)path eventFlag:(FSEventStreamEventFlags)flag;
 
 @end
