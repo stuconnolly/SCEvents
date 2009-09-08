@@ -1,6 +1,10 @@
 SCEVENTS VERSION HISTORY
 ------------------------
 
+VERSION 0.1.3 (build 37)
+Released on September 9, 2009
+    - [NEW] General code tidy up including the use of Objective-C 2.0 properties.
+
 VERSION 0.1.2 (build 26)
 Released on May 24, 2008
     - [FIX] Events not be ignored properly even though their paths are in the exclude list.
