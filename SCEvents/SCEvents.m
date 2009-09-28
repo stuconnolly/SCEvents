@@ -248,7 +248,7 @@ static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallB
     
     for (i = 0; i < numEvents; i++) {
         
-        /* Please note that we are providing the date for when the event occurred 
+        /* Please note that we are estimating the date for when the event occurred 
          * because the FSEvents API does not provide us with it. This date however
          * should not be taken as the date the event actually occurred and more 
          * appropriatly the date for when it was delivered to this callback function.
