@@ -66,4 +66,6 @@
 
 - (BOOL)stopWatchingPaths;
 
+- (NSString *)streamDescription;
+
 @end

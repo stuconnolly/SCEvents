@@ -178,13 +178,21 @@ static SCEvents *_sharedPathWatcher = nil;
 - (BOOL)stopWatchingPaths
 {
     if (!isWatchingPaths) return NO;
-    
+	    
     FSEventStreamStop(eventStream);
     FSEventStreamInvalidate(eventStream);
+	FSEventStreamRelease(eventStream);
     
     isWatchingPaths = NO;
     
     return YES;
+}
+
+- (NSString *)streamDescription
+{
+	if (!isWatchingPaths) return @"The event stream is not running. Start it by calling: startWatchingPaths:";
+	
+	return (NSString *)FSEventStreamCopyDescription(eventStream);
 }
 
 /**
@@ -201,10 +209,11 @@ static SCEvents *_sharedPathWatcher = nil;
  */
 - (void)dealloc
 {
-    delegate = nil;
-    
-    FSEventStreamRelease(eventStream);
-    
+	delegate = nil;
+	
+	// Stop the event stream if it's still running
+	if (isWatchingPaths) [self stopWatchingPaths];
+        
 	[lastEvent release], lastEvent = nil;
     [watchedPaths release], watchedPaths = nil;
     [excludedPaths release], excludedPaths = nil;
@@ -228,6 +237,8 @@ static SCEvents *_sharedPathWatcher = nil;
 	callbackInfo.retain  = NULL;
 	callbackInfo.release = NULL;
 	callbackInfo.copyDescription = NULL;
+	
+	if (eventStream) FSEventStreamRelease(eventStream);
     
     eventStream = FSEventStreamCreate(kCFAllocatorDefault, &_SCEventsCallBack, &callbackInfo, ((CFArrayRef)watchedPaths), kFSEventStreamEventIdSinceNow, notificationLatency, kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagWatchRoot);
 }

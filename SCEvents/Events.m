@@ -35,7 +35,7 @@ int main(int argc, const char *argv[])
 {
     /**
 	 * Please note that this program is merely an example of using the 
-     * SCEvents wrapper and so the run loop created will run forever until
+	 * SCEvents wrapper and so the run loop created will run forever until
      * it is terminated. 
      *
      * This program's contollrer (Controller.m) simply implements
