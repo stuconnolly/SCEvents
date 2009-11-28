@@ -49,11 +49,11 @@
     NSMutableArray *excludePaths = [NSMutableArray arrayWithObject:[NSHomeDirectory() stringByAppendingPathComponent:@"Downloads"]];
     
 	// Set the paths to be excluded
-    [events setExcludedPaths:excludePaths];
+	[events setExcludedPaths:excludePaths];
 	
 	// Start receiving events
-    [events startWatchingPaths:paths];
-	
+	[events startWatchingPaths:paths];
+
 	// Display a description of the stream
 	NSLog(@"%@", [events streamDescription]);	
 }

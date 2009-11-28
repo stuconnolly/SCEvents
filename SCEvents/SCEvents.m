@@ -181,7 +181,8 @@ static SCEvents *_sharedPathWatcher = nil;
 	    
     FSEventStreamStop(eventStream);
     FSEventStreamInvalidate(eventStream);
-	FSEventStreamRelease(eventStream);
+	
+	if (eventStream) FSEventStreamRelease(eventStream), eventStream = nil;
     
     isWatchingPaths = NO;
     
