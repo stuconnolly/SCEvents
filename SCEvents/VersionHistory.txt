@@ -1,8 +1,8 @@
 SCEVENTS VERSION HISTORY
 ------------------------
 
-VERSION 0.1.4 (build 46)
-Released on November 29, 2009
+VERSION 0.1.4 (build 47)
+Released on December 1, 2009
 	- [FIX] Fix an issue that prevented external drives from being ejected even after stopWatchingPaths; had been called.
 	- [NEW] Added the method streamDescription; which calls the FSEvents function FSEventStreamCopyDescription() to return debug information for the event stream.
 
