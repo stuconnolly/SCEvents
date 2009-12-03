@@ -297,7 +297,11 @@ static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallB
         }
     
         if (!shouldIgnore) {
-            NSString *eventPath = [[((NSArray *)eventPaths) objectAtIndex:i] substringToIndex:([[((NSArray *)eventPaths) objectAtIndex:i] length] - 1)];
+			
+			// If present remove the path's trailing slash
+			if ([eventPath hasSuffix:@"/"]) {
+				eventPath = [eventPath substringToIndex:([[((NSArray *)eventPaths) objectAtIndex:i] length] - 1)];
+			}
             
             SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:eventPath eventFlag:eventFlags[i]];
                 
