@@ -258,8 +258,8 @@ static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallB
     
     SCEvents *pathWatcher = (SCEvents *)clientCallBackInfo;
     
-    for (i = 0; i < numEvents; i++) {
-        
+    for (i = 0; i < numEvents; i++) 
+	{
         /* Please note that we are estimating the date for when the event occurred 
          * because the FSEvents API does not provide us with it. This date however
          * should not be taken as the date the event actually occurred and more 

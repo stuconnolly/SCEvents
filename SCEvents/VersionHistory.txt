@@ -1,8 +1,8 @@
 SCEVENTS VERSION HISTORY
 ------------------------
 
-VERSION 0.1.4 (build 48)
-Released on December, 2009
+VERSION 0.1.4 (build 50)
+Released on December 5, 2009
 	- [FIX] Fix an issue relating to the removal of an event path's trailing slash.
 	- [FIX] Fix an issue that prevented external drives from being ejected even after stopWatchingPaths; had been called.
 	- [NEW] Added the method streamDescription; which calls the FSEvents function FSEventStreamCopyDescription() to return debug information for the event stream.
