@@ -50,7 +50,7 @@
 				32A70AAB03705E1F00C91783 /* SCEvents.pch */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				17BD472C0DE85550008FC970 /* Other */,
-				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
+				08FB779DFE84155DC02AAC07 /* Frameworks */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
 			);
 			name = SCEvents;
@@ -67,13 +67,13 @@
 			name = Source;
 			sourceTree = "<group>";
 		};
-		08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */ = {
+		08FB779DFE84155DC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				171953DC0DB3FD3B00AAC8B8 /* CoreServices.framework */,
 				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
 			);
-			name = "External Frameworks and Libraries";
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		171953D70DB3FCE900AAC8B8 /* SCEvents */ = {
