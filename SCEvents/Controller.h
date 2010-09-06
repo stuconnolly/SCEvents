@@ -3,7 +3,7 @@
  *
  *  SCEvents
  *
- *  Copyright (c) 2010 Stuart Connolly
+ *  Copyright (c) 2010 Stuart Connolly. All rights reserved.
  *  http://stuconnolly.com/projects/code/
  *
  *  Permission is hereby granted, free of charge, to any person
