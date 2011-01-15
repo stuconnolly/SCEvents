@@ -234,14 +234,20 @@ static SCEvents *_sharedPathWatcher = nil;
     FSEventStreamContext callbackInfo;
 	
 	callbackInfo.version = 0;
-	callbackInfo.info    = (void*)self;
+	callbackInfo.info    = (void *)self;
 	callbackInfo.retain  = NULL;
 	callbackInfo.release = NULL;
 	callbackInfo.copyDescription = NULL;
 	
 	if (eventStream) FSEventStreamRelease(eventStream);
     
-    eventStream = FSEventStreamCreate(kCFAllocatorDefault, &_SCEventsCallBack, &callbackInfo, ((CFArrayRef)watchedPaths), kFSEventStreamEventIdSinceNow, notificationLatency, kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagWatchRoot);
+    eventStream = FSEventStreamCreate(kCFAllocatorDefault, 
+									  &_SCEventsCallBack, 
+									  &callbackInfo, 
+									  ((CFArrayRef)watchedPaths), 
+									  kFSEventStreamEventIdSinceNow, 
+									  notificationLatency, 
+									  kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagWatchRoot);
 }
 
 /**
@@ -251,7 +257,12 @@ static SCEvents *_sharedPathWatcher = nil;
  * called with more than one event and so multiple instances of SCEvent are created
  * and the delegate notified.
  */
-static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[])
+static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, 
+							  void *clientCallBackInfo, 
+							  size_t numEvents, 
+							  void *eventPaths, 
+							  const FSEventStreamEventFlags eventFlags[], 
+							  const FSEventStreamEventId eventIds[])
 {
     NSUInteger i;
     BOOL shouldIgnore = NO;

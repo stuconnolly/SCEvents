@@ -32,10 +32,10 @@
 
 @implementation SCEvent
 
-@synthesize eventId;
-@synthesize eventDate;
-@synthesize eventPath;
-@synthesize eventFlag;
+@synthesize _eventId;
+@synthesize _eventDate;
+@synthesize _eventPath;
+@synthesize _eventFlag;
 
 /**
  * Returns an initialized instance of SCEvent using the supplied event ID, path 
@@ -67,7 +67,7 @@
  */
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ { eventId = %ld, eventPath = %@, eventFlag = %ld } >", [self className], ((unsigned long)eventId), [self eventPath], ((unsigned long)eventFlag)];
+	return [NSString stringWithFormat:@"<%@ { eventId = %ld, eventPath = %@, eventFlag = %ld } >", [self className], ((unsigned long)_eventId), [self eventPath], ((unsigned long)_eventFlag)];
 }
 
 /**
@@ -75,7 +75,7 @@
  */
 - (void)dealloc
 {
-    [eventDate release], eventDate = nil;
+    [_eventDate release], _eventDate = nil;
 	
     [super dealloc];
 }

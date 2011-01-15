@@ -33,16 +33,16 @@
 
 @interface SCEvent : NSObject 
 {
-    NSUInteger eventId;
-    NSDate *eventDate;
-    NSString *eventPath;
-    FSEventStreamEventFlags eventFlag;
+    NSUInteger _eventId;
+    NSDate *_eventDate;
+    NSString *_eventPath;
+    FSEventStreamEventFlags _eventFlag;
 }
 
-@property (readwrite, assign) NSUInteger eventId;
-@property (readwrite, retain) NSDate *eventDate;
-@property (readwrite, retain) NSString *eventPath;
-@property (readwrite, assign) FSEventStreamEventFlags eventFlag;
+@property (readwrite, assign, getter=eventId, setter=setEventId:) NSUInteger _eventId;
+@property (readwrite, retain, getter=eventDate, setter=setEventDate:) NSDate *_eventDate;
+@property (readwrite, retain, getter=eventPath, setter=setEventPath:) NSString *_eventPath;
+@property (readwrite, assign, getter=eventFlag, setter=setEventFlag:) FSEventStreamEventFlags _eventFlag;
 
 + (SCEvent *)eventWithEventId:(NSUInteger)identifier eventDate:(NSDate *)date eventPath:(NSString *)path eventFlag:(FSEventStreamEventFlags)flag;
 
