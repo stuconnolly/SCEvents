@@ -34,8 +34,17 @@
 
 @interface SCEvents (PrivateAPI)
 
-- (void)_setupEventsStream;
-static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[]);
+static void _setup_events_stream(SCEvents *watcher,
+								 FSEventStreamRef stream, 
+								 CFArrayRef paths, 
+								 CFTimeInterval latency);
+
+static void _events_callback(ConstFSEventStreamRef streamRef, 
+							 void *clientCallBackInfo, 
+							 size_t numEvents, 
+							 void *eventPaths, 
+							 const FSEventStreamEventFlags eventFlags[], 
+							 const FSEventStreamEventId eventIds[]);
 
 @end
 
@@ -157,7 +166,8 @@ static SCEvents *_sharedPathWatcher = nil;
     if (([paths count] == 0) || (isWatchingPaths)) return NO;
     
     [self setWatchedPaths:paths];
-    [self _setupEventsStream];
+    
+	_setup_events_stream(self, eventStream, ((CFArrayRef)watchedPaths), notificationLatency);
     
     // Schedule the event stream on the supplied run loop
     FSEventStreamScheduleWithRunLoop(eventStream, [runLoop getCFRunLoop], kCFRunLoopDefaultMode);
@@ -227,27 +237,31 @@ static SCEvents *_sharedPathWatcher = nil;
 @implementation SCEvents (PrivateAPI)
 
 /**
- * Constructs the events stream.
+ * 
+ *
+ * @param stream
+ * @param paths
+ * @param latency
  */
-- (void)_setupEventsStream
+static void _setup_events_stream(SCEvents *watcher, FSEventStreamRef stream, CFArrayRef paths, CFTimeInterval latency)
 {
-    FSEventStreamContext callbackInfo;
+	FSEventStreamContext callbackInfo;
 	
 	callbackInfo.version = 0;
-	callbackInfo.info    = (void *)self;
+	callbackInfo.info    = (void *)watcher;
 	callbackInfo.retain  = NULL;
 	callbackInfo.release = NULL;
 	callbackInfo.copyDescription = NULL;
 	
-	if (eventStream) FSEventStreamRelease(eventStream);
+	if (stream) FSEventStreamRelease(stream);
     
-    eventStream = FSEventStreamCreate(kCFAllocatorDefault, 
-									  &_SCEventsCallBack, 
-									  &callbackInfo, 
-									  ((CFArrayRef)watchedPaths), 
-									  kFSEventStreamEventIdSinceNow, 
-									  notificationLatency, 
-									  kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagWatchRoot);
+    stream = FSEventStreamCreate(kCFAllocatorDefault, 
+								 &_events_callback,
+								 &callbackInfo, 
+								 paths, 
+								 kFSEventStreamEventIdSinceNow, 
+								 latency, 
+								 kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagWatchRoot);
 }
 
 /**
@@ -257,7 +271,7 @@ static SCEvents *_sharedPathWatcher = nil;
  * called with more than one event and so multiple instances of SCEvent are created
  * and the delegate notified.
  */
-static void _SCEventsCallBack(ConstFSEventStreamRef streamRef, 
+static void _events_callback(ConstFSEventStreamRef streamRef, 
 							  void *clientCallBackInfo, 
 							  size_t numEvents, 
 							  void *eventPaths, 
