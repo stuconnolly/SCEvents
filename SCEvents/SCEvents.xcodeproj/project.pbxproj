@@ -27,7 +27,7 @@
 		171953FA0DB3FDE500AAC8B8 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		171953FC0DB3FDFB00AAC8B8 /* SCEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvents.m; sourceTree = "<group>"; };
 		17BD47390DE855CC008FC970 /* VersionHistory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VersionHistory.txt; sourceTree = "<group>"; };
-		32A70AAB03705E1F00C91783 /* SCEvents.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEvents.pch; sourceTree = "<group>"; };
+		32A70AAB03705E1F00C91783 /* SCEvents.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCEvents.pch; path = Example/SCEvents.pch; sourceTree = SOURCE_ROOT; };
 		8DD76FA10486AA7600D96B5E /* SCEvents */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SCEvents; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -47,7 +47,6 @@
 		08FB7794FE84155DC02AAC07 /* SCEvents */ = {
 			isa = PBXGroup;
 			children = (
-				32A70AAB03705E1F00C91783 /* SCEvents.pch */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				17BD472C0DE85550008FC970 /* Other */,
 				08FB779DFE84155DC02AAC07 /* Frameworks */,
@@ -59,12 +58,11 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				08FB7796FE84155DC02AAC07 /* Events.m */,
-				171953F90DB3FDE500AAC8B8 /* Controller.h */,
-				171953FA0DB3FDE500AAC8B8 /* Controller.m */,
+				32A70AAB03705E1F00C91783 /* SCEvents.pch */,
+				17B8621812E1EAB4003A228E /* Example */,
 				171953D70DB3FCE900AAC8B8 /* SCEvents */,
 			);
-			name = Source;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		08FB779DFE84155DC02AAC07 /* Frameworks */ = {
@@ -87,6 +85,16 @@
 			);
 			name = SCEvents;
 			sourceTree = "<group>";
+		};
+		17B8621812E1EAB4003A228E /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7796FE84155DC02AAC07 /* Events.m */,
+				171953F90DB3FDE500AAC8B8 /* Controller.h */,
+				171953FA0DB3FDE500AAC8B8 /* Controller.m */,
+			);
+			path = Example;
+			sourceTree = SOURCE_ROOT;
 		};
 		17BD472C0DE85550008FC970 /* Other */ = {
 			isa = PBXGroup;
@@ -173,7 +181,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SCEvents.pch;
 				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = SCEvents;
 			};
@@ -186,7 +193,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = SCEvents_Prefix.pch;
 				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = SCEvents;
 			};
@@ -196,14 +202,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = Example/SCEvents.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
+				VALID_ARCHS = "i386 ppc ppc64 x86_64";
 			};
 			name = Development;
 		};
@@ -211,12 +220,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREFIX_HEADER = Example/SCEvents.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
+				VALID_ARCHS = "i386 ppc ppc64 x86_64";
 			};
 			name = Release;
 		};
