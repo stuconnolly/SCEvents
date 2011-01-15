@@ -31,6 +31,10 @@
 #import <Foundation/Foundation.h>
 #import <CoreServices/CoreServices.h>
 
+/**
+ *
+ *
+ */
 @interface SCEvent : NSObject 
 {
     NSUInteger _eventId;
@@ -44,8 +48,14 @@
 @property (readwrite, retain, getter=eventPath, setter=setEventPath:) NSString *_eventPath;
 @property (readwrite, assign, getter=eventFlag, setter=setEventFlag:) FSEventStreamEventFlags _eventFlag;
 
-+ (SCEvent *)eventWithEventId:(NSUInteger)identifier eventDate:(NSDate *)date eventPath:(NSString *)path eventFlag:(FSEventStreamEventFlags)flag;
++ (SCEvent *)eventWithEventId:(NSUInteger)identifier 
+					eventDate:(NSDate *)date 
+					eventPath:(NSString *)path 
+					eventFlag:(FSEventStreamEventFlags)flag;
 
-- (id)initWithEventId:(NSUInteger)identifier eventDate:(NSDate *)date eventPath:(NSString *)path eventFlag:(FSEventStreamEventFlags)flag;
+- (id)initWithEventId:(NSUInteger)identifier 
+			eventDate:(NSDate *)date 
+			eventPath:(NSString *)path 
+			eventFlag:(FSEventStreamEventFlags)flag;
 
 @end

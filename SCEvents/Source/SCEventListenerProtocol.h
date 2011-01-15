@@ -30,6 +30,10 @@
 
 @class SCEvents, SCEvent;
 
+/**
+ *
+ *
+ */
 @protocol SCEventListenerProtocol
 
 /**

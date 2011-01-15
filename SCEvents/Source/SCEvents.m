@@ -32,6 +32,10 @@
 #import "SCEvent.h"
 #import "SCEventListenerProtocol.h"
 
+/**
+ *
+ *
+ */
 @interface SCEvents (PrivateAPI)
 
 static void _setup_events_stream(SCEvents *watcher,
@@ -52,13 +56,13 @@ static SCEvents *_sharedPathWatcher = nil;
 
 @implementation SCEvents
 
-@synthesize delegate;
-@synthesize isWatchingPaths;
-@synthesize ignoreEventsFromSubDirs;
-@synthesize lastEvent;
-@synthesize notificationLatency;
-@synthesize watchedPaths;
-@synthesize excludedPaths;
+@synthesize _delegate;
+@synthesize _isWatchingPaths;
+@synthesize _ignoreEventsFromSubDirs;
+@synthesize _lastEvent;
+@synthesize _notificationLatency;
+@synthesize _watchedPaths;
+@synthesize _excludedPaths;
 
 /**
  * Returns the shared singleton instance of SCEvents.
@@ -97,7 +101,7 @@ static SCEvents *_sharedPathWatcher = nil;
 - (id)init
 {
     if ((self = [super init])) {
-        isWatchingPaths = NO;
+        _isWatchingPaths = NO;
         
         [self setNotificationLatency:3.0];
         [self setIgnoreEventsFromSubDirs:YES]; 
@@ -127,9 +131,9 @@ static SCEvents *_sharedPathWatcher = nil;
  */
 - (BOOL)flushEventStreamSync
 {
-    if (!isWatchingPaths) return NO;
+    if (!_isWatchingPaths) return NO;
     
-    FSEventStreamFlushSync(eventStream);
+    FSEventStreamFlushSync(_eventStream);
     
     return YES;
 }
@@ -140,9 +144,9 @@ static SCEvents *_sharedPathWatcher = nil;
  */
 - (BOOL)flushEventStreamAsync
 {
-    if (!isWatchingPaths) return NO;
+    if (!_isWatchingPaths) return NO;
     
-    FSEventStreamFlushAsync(eventStream);
+    FSEventStreamFlushAsync(_eventStream);
     
     return YES;
 }
@@ -163,19 +167,19 @@ static SCEvents *_sharedPathWatcher = nil;
  */
 - (BOOL)startWatchingPaths:(NSMutableArray *)paths onRunLoop:(NSRunLoop *)runLoop
 {
-    if (([paths count] == 0) || (isWatchingPaths)) return NO;
+    if (([paths count] == 0) || (_isWatchingPaths)) return NO;
     
     [self setWatchedPaths:paths];
     
-	_setup_events_stream(self, eventStream, ((CFArrayRef)watchedPaths), notificationLatency);
+	_setup_events_stream(self, _eventStream, ((CFArrayRef)_watchedPaths), _notificationLatency);
     
     // Schedule the event stream on the supplied run loop
-    FSEventStreamScheduleWithRunLoop(eventStream, [runLoop getCFRunLoop], kCFRunLoopDefaultMode);
+    FSEventStreamScheduleWithRunLoop(_eventStream, [runLoop getCFRunLoop], kCFRunLoopDefaultMode);
     
     // Start the event stream
-    FSEventStreamStart(eventStream);
+    FSEventStreamStart(_eventStream);
     
-    isWatchingPaths = YES;
+    _isWatchingPaths = YES;
     
     return YES;
 }
@@ -187,23 +191,23 @@ static SCEvents *_sharedPathWatcher = nil;
  */
 - (BOOL)stopWatchingPaths
 {
-    if (!isWatchingPaths) return NO;
+    if (!_isWatchingPaths) return NO;
 	    
-    FSEventStreamStop(eventStream);
-    FSEventStreamInvalidate(eventStream);
+    FSEventStreamStop(_eventStream);
+    FSEventStreamInvalidate(_eventStream);
 	
-	if (eventStream) FSEventStreamRelease(eventStream), eventStream = nil;
+	if (_eventStream) FSEventStreamRelease(_eventStream), _eventStream = nil;
     
-    isWatchingPaths = NO;
+    _isWatchingPaths = NO;
     
     return YES;
 }
 
 - (NSString *)streamDescription
 {
-	if (!isWatchingPaths) return @"The event stream is not running. Start it by calling: startWatchingPaths:";
+	if (!_isWatchingPaths) return @"The event stream is not running. Start it by calling: startWatchingPaths:";
 	
-	return (NSString *)FSEventStreamCopyDescription(eventStream);
+	return (NSString *)FSEventStreamCopyDescription(_eventStream);
 }
 
 /**
@@ -212,7 +216,7 @@ static SCEvents *_sharedPathWatcher = nil;
  */
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@ { watchedPaths = %@, excludedPaths = %@ } >", [self className], watchedPaths, excludedPaths];
+    return [NSString stringWithFormat:@"<%@ { watchedPaths = %@, excludedPaths = %@ } >", [self className], _watchedPaths, _excludedPaths];
 }
 
 /**
@@ -220,14 +224,14 @@ static SCEvents *_sharedPathWatcher = nil;
  */
 - (void)dealloc
 {
-	delegate = nil;
+	_delegate = nil;
 	
 	// Stop the event stream if it's still running
-	if (isWatchingPaths) [self stopWatchingPaths];
+	if (_isWatchingPaths) [self stopWatchingPaths];
         
-	[lastEvent release], lastEvent = nil;
-    [watchedPaths release], watchedPaths = nil;
-    [excludedPaths release], excludedPaths = nil;
+	[_lastEvent release], _lastEvent = nil;
+    [_watchedPaths release], _watchedPaths = nil;
+    [_excludedPaths release], _excludedPaths = nil;
     
     [super dealloc];
 }
