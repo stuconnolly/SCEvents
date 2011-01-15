@@ -52,15 +52,40 @@
     NSMutableArray   *_excludedPaths;          // The paths that SCEvents should ignore events from and not deliver to the delegate.
 }
 
+/**
+ * @property _delegate
+ */
 @property (readwrite, assign, getter=delegate, setter=setDelegate:) id _delegate;
-@property (readonly, getter=isWatchingPaths) BOOL _isWatchingPaths;
-@property (readwrite, assign, getter=ignoreEventsFromSubDirs, setter=setIgnoreEventsFromSubDirs:) BOOL _ignoreEventsFromSubDirs;
-@property (readwrite, retain, getter=lastEvent, setter=setLastEvent:) SCEvent *_lastEvent;
-@property (readwrite, assign, getter=notificationLatency, setter=setNotificationLatency:) double _notificationLatency;
-@property (readwrite, retain, getter=watchedPaths, setter=setWatchedPaths:) NSMutableArray *_watchedPaths;
-@property (readwrite, retain, getter=excludedPaths, setter=setExcludedPaths:) NSMutableArray *_excludedPaths;
 
-+ (id)sharedPathWatcher;
+/**
+ * @property _isWatchingPaths
+ */
+@property (readonly, getter=isWatchingPaths) BOOL _isWatchingPaths;
+
+/**
+ * @property _ignoreEventsFromSubDirs
+ */
+@property (readwrite, assign, getter=ignoreEventsFromSubDirs, setter=setIgnoreEventsFromSubDirs:) BOOL _ignoreEventsFromSubDirs;
+
+/**
+ * @property _lastEvent
+ */
+@property (readwrite, retain, getter=lastEvent, setter=setLastEvent:) SCEvent *_lastEvent;
+
+/**
+ * @property _notificationLatency
+ */
+@property (readwrite, assign, getter=notificationLatency, setter=setNotificationLatency:) double _notificationLatency;
+
+/**
+ * @property _watchedPaths
+ */
+@property (readwrite, retain, getter=watchedPaths, setter=setWatchedPaths:) NSMutableArray *_watchedPaths;
+
+/**
+ * @property _excludedPaths
+ */
+@property (readwrite, retain, getter=excludedPaths, setter=setExcludedPaths:) NSMutableArray *_excludedPaths;
 
 - (BOOL)flushEventStreamSync;
 - (BOOL)flushEventStreamAsync;

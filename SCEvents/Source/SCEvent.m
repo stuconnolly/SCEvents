@@ -37,9 +37,19 @@
 @synthesize _eventPath;
 @synthesize _eventFlag;
 
+#pragma mark -
+#pragma mark Initialisation
+
 /**
  * Returns an initialized instance of SCEvent using the supplied event ID, path 
  * and flag.
+ *
+ * @param 
+ * @param
+ * @param
+ * @param
+ *
+ * @return
  */
 + (SCEvent *)eventWithEventId:(NSUInteger)identifier 
 					eventDate:(NSDate *)date 
@@ -51,6 +61,13 @@
 
 /**
  * Initializes an instance of SCEvent using the supplied event ID, path and flag.
+ *
+ * @param 
+ * @param
+ * @param
+ * @param
+ *
+ * @return
  */
 - (id)initWithEventId:(NSUInteger)identifier 
 			eventDate:(NSDate *)date 
@@ -67,18 +84,22 @@
     return self;
 }
 
+#pragma mark -
+#pragma mark Other
+
 /**
  * Provides the string used when printing this object in NSLog, etc. Useful for
  * debugging purposes.
+ *
+ * @return
  */
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<%@ { eventId = %ld, eventPath = %@, eventFlag = %ld } >", [self className], ((unsigned long)_eventId), [self eventPath], ((unsigned long)_eventFlag)];
 }
 
-/**
- * dealloc
- */
+#pragma mark -
+
 - (void)dealloc
 {
     [_eventDate release], _eventDate = nil;

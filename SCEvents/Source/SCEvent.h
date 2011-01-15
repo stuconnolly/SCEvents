@@ -43,9 +43,24 @@
     FSEventStreamEventFlags _eventFlag;
 }
 
+/**
+ * @property _eventId
+ */
 @property (readwrite, assign, getter=eventId, setter=setEventId:) NSUInteger _eventId;
+
+/**
+ * @property _eventDate
+ */
 @property (readwrite, retain, getter=eventDate, setter=setEventDate:) NSDate *_eventDate;
+
+/**
+ * @property _eventPath
+ */
 @property (readwrite, retain, getter=eventPath, setter=setEventPath:) NSString *_eventPath;
+
+/**
+ * @property _eventFlag
+ */
 @property (readwrite, assign, getter=eventFlag, setter=setEventFlag:) FSEventStreamEventFlags _eventFlag;
 
 + (SCEvent *)eventWithEventId:(NSUInteger)identifier 

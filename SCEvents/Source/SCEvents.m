@@ -52,8 +52,6 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 
 @end
 
-static SCEvents *_sharedPathWatcher = nil;
-
 @implementation SCEvents
 
 @synthesize _delegate;
@@ -64,36 +62,8 @@ static SCEvents *_sharedPathWatcher = nil;
 @synthesize _watchedPaths;
 @synthesize _excludedPaths;
 
-/**
- * Returns the shared singleton instance of SCEvents.
- */
-+ (id)sharedPathWatcher
-{
-    @synchronized(self) {
-        if (_sharedPathWatcher == nil) {
-            [[self alloc] init];
-        }
-    }
-    
-    return _sharedPathWatcher;
-}
-
-/**
- * allocWithZone:
- */
-+ (id)allocWithZone:(NSZone *)zone
-{
-    @synchronized(self) {
-        if (_sharedPathWatcher == nil) {
-            _sharedPathWatcher = [super allocWithZone:zone];
-            
-            return _sharedPathWatcher;
-        }
-    }
-    
-	// On subsequent allocation attempts return nil
-    return nil;
-}
+#pragma mark -
+#pragma mark Initialisation
 
 /**
  * Initializes an instance of SCEvents setting its default values.
@@ -110,20 +80,8 @@ static SCEvents *_sharedPathWatcher = nil;
     return self;
 }
 
-/**
- * The following base protocol methods are implemented to ensure
- * the singleton status of this class.
- */ 
-
-- (id)copyWithZone:(NSZone *)zone { return self; }
-
-- (id)retain { return self; }
-
-- (NSUInteger)retainCount { return NSUIntegerMax; }
-
-- (id)autorelease { return self; }
-
-- (void)release { }
+#pragma mark -
+#pragma mark Public API
 
 /**
  * Flushes the event stream synchronously by sending events that have already 
@@ -196,7 +154,7 @@ static SCEvents *_sharedPathWatcher = nil;
     FSEventStreamStop(_eventStream);
     FSEventStreamInvalidate(_eventStream);
 	
-	if (_eventStream) FSEventStreamRelease(_eventStream), _eventStream = nil;
+	if (_eventStream) FSEventStreamRelease(_eventStream), _eventStream = NULL;
     
     _isWatchingPaths = NO;
     
@@ -210,6 +168,9 @@ static SCEvents *_sharedPathWatcher = nil;
 	return (NSString *)FSEventStreamCopyDescription(_eventStream);
 }
 
+#pragma mark -
+#pragma mark Other
+
 /**
  * Provides the string used when printing this object in NSLog, etc. Useful for
  * debugging purposes.
@@ -218,6 +179,8 @@ static SCEvents *_sharedPathWatcher = nil;
 {
     return [NSString stringWithFormat:@"<%@ { watchedPaths = %@, excludedPaths = %@ } >", [self className], _watchedPaths, _excludedPaths];
 }
+
+#pragma mark -
 
 /**
  * dealloc

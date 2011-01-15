@@ -41,21 +41,23 @@
  */
 - (void)setupEventListener
 {
-    SCEvents *events = [SCEvents sharedPathWatcher];
+	if (_events) return;
+	
+    _events = [[SCEvents alloc] init];
     
-    [events setDelegate:self];
+    [_events setDelegate:self];
     
     NSMutableArray *paths = [NSMutableArray arrayWithObject:NSHomeDirectory()];
     NSMutableArray *excludePaths = [NSMutableArray arrayWithObject:[NSHomeDirectory() stringByAppendingPathComponent:@"Downloads"]];
     
 	// Set the paths to be excluded
-	[events setExcludedPaths:excludePaths];
+	[_events setExcludedPaths:excludePaths];
 	
 	// Start receiving events
-	[events startWatchingPaths:paths];
+	[_events startWatchingPaths:paths];
 
 	// Display a description of the stream
-	NSLog(@"%@", [events streamDescription]);	
+	NSLog(@"%@", [_events streamDescription]);	
 }
 
 /**
@@ -65,6 +67,15 @@
 - (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event
 {
     NSLog(@"%@", event);
+}
+
+#pragma mark -
+
+- (void)dealloc
+{
+	[_events release], _events = nil;
+	
+	[super dealloc];
 }
 
 @end
