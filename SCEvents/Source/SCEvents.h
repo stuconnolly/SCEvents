@@ -36,7 +36,9 @@
 @class SCEvent;
 
 /**
+ * @class SCEvents SCEvents.h
  *
+ * @author Stuart Connolly http://stuconnolly.com/
  *
  */
 @interface SCEvents : NSObject 

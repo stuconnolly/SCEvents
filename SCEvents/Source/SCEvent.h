@@ -32,7 +32,9 @@
 #import <CoreServices/CoreServices.h>
 
 /**
+ * @class SCEvent SCEvent.h
  *
+ * @author Stuart Connolly http://stuconnolly.com/
  *
  */
 @interface SCEvent : NSObject 

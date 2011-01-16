@@ -31,7 +31,9 @@
 @class SCEvents, SCEvent;
 
 /**
+ * @protocol SCEventListenerProtocol SCEventListenerProtocol.h
  *
+ * @author Stuart Connolly http://stuconnolly.com/
  *
  */
 @protocol SCEventListenerProtocol

@@ -32,7 +32,9 @@
 #import "SCEventListenerProtocol.h"
 
 /**
+ * @class Controller Controller.h
  *
+ * @author Stuart Connolly http://stuconnolly.com/
  *
  */
 @interface Controller : NSObject <SCEventListenerProtocol>
