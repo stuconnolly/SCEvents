@@ -30,7 +30,6 @@
 
 #import "SCEvents.h"
 #import "SCEvent.h"
-#import "SCEventListenerProtocol.h"
 
 /**
  *
@@ -67,6 +66,8 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 
 /**
  * Initializes an instance of SCEvents setting its default values.
+ *
+ * @return 
  */
 - (id)init
 {
@@ -86,6 +87,8 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 /**
  * Flushes the event stream synchronously by sending events that have already 
  * occurred but not yet delivered.
+ *
+ * @return
  */
 - (BOOL)flushEventStreamSync
 {
@@ -99,6 +102,8 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 /**
  * Flushes the event stream asynchronously by sending events that have already 
  * occurred but not yet delivered.
+ *
+ * @return
  */
 - (BOOL)flushEventStreamAsync
 {
@@ -111,6 +116,10 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 
 /**
  * Starts watching the supplied array of paths for events on the current run loop.
+ *
+ * @param
+ *
+ * @return
  */
 - (BOOL)startWatchingPaths:(NSMutableArray *)paths
 {
@@ -122,6 +131,11 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  * A boolean value is returned to indicate the success of starting the stream. If 
  * there are no paths to watch or the stream is already running then false is
  * returned.
+ *
+ * @param paths
+ * @param runLoop
+ *
+ * @return
  */
 - (BOOL)startWatchingPaths:(NSMutableArray *)paths onRunLoop:(NSRunLoop *)runLoop
 {
@@ -146,6 +160,8 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  * Stops the event stream from watching the set paths. A boolean value is returned
  * to indicate the success of stopping the stream. False is return if this method 
  * is called when the stream is not already running.
+ *
+ * @return
  */
 - (BOOL)stopWatchingPaths
 {
@@ -161,6 +177,11 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
     return YES;
 }
 
+/**
+ *
+ *
+ * @return
+ */
 - (NSString *)streamDescription
 {
 	if (!_isWatchingPaths) return @"The event stream is not running. Start it by calling: startWatchingPaths:";
@@ -174,6 +195,8 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 /**
  * Provides the string used when printing this object in NSLog, etc. Useful for
  * debugging purposes.
+ *
+ * @return
  */
 - (NSString *)description
 {
@@ -182,9 +205,6 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 
 #pragma mark -
 
-/**
- * dealloc
- */
 - (void)dealloc
 {
 	_delegate = nil;
@@ -237,6 +257,13 @@ static void _setup_events_stream(SCEvents *watcher, FSEventStreamRef stream, CFA
  * called depends upon the notification latency value. This callback is usually
  * called with more than one event and so multiple instances of SCEvent are created
  * and the delegate notified.
+ *
+ * @param streamRef
+ * @param clientCallBackInfo
+ * @param numEvents
+ * @param eventPaths
+ * @param eventFlags
+ * @param eventIds
  */
 static void _events_callback(ConstFSEventStreamRef streamRef, 
 							  void *clientCallBackInfo, 

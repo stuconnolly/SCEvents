@@ -31,8 +31,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreServices/CoreServices.h>
 
+#import "SCEventListenerProtocol.h"
+
 @class SCEvent;
-@protocol SCEventListenerProtocol;
 
 /**
  *
