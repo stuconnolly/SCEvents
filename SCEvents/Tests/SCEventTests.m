@@ -36,4 +36,22 @@
 
 @implementation SCEventTests
 
+#pragma mark -
+#pragma mark Setup and teardown
+
+- (void)setUp
+{
+	
+}
+
+- (void)tearDown
+{
+	
+}
+
+#pragma mark -
+#pragma mark Tests
+
+
+
 @end
