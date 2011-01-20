@@ -11,6 +11,8 @@
 		171953FB0DB3FDE500AAC8B8 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 171953FA0DB3FDE500AAC8B8 /* Controller.m */; };
 		171953FD0DB3FDFB00AAC8B8 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 171953FC0DB3FDFB00AAC8B8 /* SCEvents.m */; };
 		175387700DB9743C0017AE02 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 171953D90DB3FCFD00AAC8B8 /* SCEvent.m */; };
+		17F44F5912E8F7F100F6F16C /* SCEventTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F44F5812E8F7F100F6F16C /* SCEventTests.m */; };
+		17F44F5C12E8F94A00F6F16C /* SCEventsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F44F5B12E8F94A00F6F16C /* SCEventsTests.m */; };
 		8DD76F9A0486AA7600D96B5E /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* Events.m */; settings = {ATTRIBUTES = (); }; };
 		8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -27,6 +29,8 @@
 		171953FA0DB3FDE500AAC8B8 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		171953FC0DB3FDFB00AAC8B8 /* SCEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvents.m; sourceTree = "<group>"; };
 		17BD47390DE855CC008FC970 /* VersionHistory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VersionHistory.txt; sourceTree = "<group>"; };
+		17F44F5812E8F7F100F6F16C /* SCEventTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEventTests.m; sourceTree = "<group>"; };
+		17F44F5B12E8F94A00F6F16C /* SCEventsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEventsTests.m; sourceTree = "<group>"; };
 		32A70AAB03705E1F00C91783 /* SCEvents.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCEvents.pch; path = Example/SCEvents.pch; sourceTree = SOURCE_ROOT; };
 		8DD76FA10486AA7600D96B5E /* SCEvents */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SCEvents; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -48,6 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				08FB7795FE84155DC02AAC07 /* Source */,
+				17F44F5212E8F69600F6F16C /* Tests */,
 				17BD472C0DE85550008FC970 /* Other */,
 				08FB779DFE84155DC02AAC07 /* Frameworks */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
@@ -102,6 +107,15 @@
 				17BD47390DE855CC008FC970 /* VersionHistory.txt */,
 			);
 			name = Other;
+			sourceTree = "<group>";
+		};
+		17F44F5212E8F69600F6F16C /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				17F44F5812E8F7F100F6F16C /* SCEventTests.m */,
+				17F44F5B12E8F94A00F6F16C /* SCEventsTests.m */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		1AB674ADFE9D54B511CA2CBB /* Products */ = {
@@ -165,6 +179,8 @@
 				171953FB0DB3FDE500AAC8B8 /* Controller.m in Sources */,
 				171953FD0DB3FDFB00AAC8B8 /* SCEvents.m in Sources */,
 				175387700DB9743C0017AE02 /* SCEvent.m in Sources */,
+				17F44F5912E8F7F100F6F16C /* SCEventTests.m in Sources */,
+				17F44F5C12E8F94A00F6F16C /* SCEventsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
