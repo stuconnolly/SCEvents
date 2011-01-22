@@ -52,6 +52,36 @@
 #pragma mark -
 #pragma mark Tests
 
+/**
+ *
+ */
+- (void)testEventId
+{
+	
+}
 
+/**
+ *
+ */
+- (void)testEventDate
+{
+	
+}
+
+/**
+ *
+ */
+- (void)testEventPath
+{
+	
+}
+
+/**
+ *
+ */
+- (void)testEventFlag
+{
+	
+}
 
 @end
