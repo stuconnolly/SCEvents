@@ -11,6 +11,9 @@
 		171953FB0DB3FDE500AAC8B8 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 171953FA0DB3FDE500AAC8B8 /* Controller.m */; };
 		171953FD0DB3FDFB00AAC8B8 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 171953FC0DB3FDFB00AAC8B8 /* SCEvents.m */; };
 		175387700DB9743C0017AE02 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 171953D90DB3FCFD00AAC8B8 /* SCEvent.m */; };
+		17F21F7212EB6DFA0099D065 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17F21F7112EB6DFA0099D065 /* SenTestingKit.framework */; };
+		17F21F7F12EB6E560099D065 /* SCEventTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F44F5812E8F7F100F6F16C /* SCEventTests.m */; };
+		17F21F8012EB6E560099D065 /* SCEventsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F44F5B12E8F94A00F6F16C /* SCEventsTests.m */; };
 		17F44F5912E8F7F100F6F16C /* SCEventTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F44F5812E8F7F100F6F16C /* SCEventTests.m */; };
 		17F44F5C12E8F94A00F6F16C /* SCEventsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F44F5B12E8F94A00F6F16C /* SCEventsTests.m */; };
 		8DD76F9A0486AA7600D96B5E /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* Events.m */; settings = {ATTRIBUTES = (); }; };
@@ -29,6 +32,9 @@
 		171953FA0DB3FDE500AAC8B8 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		171953FC0DB3FDFB00AAC8B8 /* SCEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvents.m; sourceTree = "<group>"; };
 		17BD47390DE855CC008FC970 /* VersionHistory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VersionHistory.txt; sourceTree = "<group>"; };
+		17F21F7112EB6DFA0099D065 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		17F21F7A12EB6E260099D065 /* Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		17F21F7B12EB6E260099D065 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		17F44F5812E8F7F100F6F16C /* SCEventTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEventTests.m; sourceTree = "<group>"; };
 		17F44F5B12E8F94A00F6F16C /* SCEventsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEventsTests.m; sourceTree = "<group>"; };
 		32A70AAB03705E1F00C91783 /* SCEvents.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCEvents.pch; path = Example/SCEvents.pch; sourceTree = SOURCE_ROOT; };
@@ -36,12 +42,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		17F21F7712EB6E260099D065 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DD76F9B0486AA7600D96B5E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */,
 				171953DD0DB3FD3B00AAC8B8 /* CoreServices.framework in Frameworks */,
+				17F21F7212EB6DFA0099D065 /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +89,7 @@
 			children = (
 				171953DC0DB3FD3B00AAC8B8 /* CoreServices.framework */,
 				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
+				17F21F7112EB6DFA0099D065 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -104,6 +119,7 @@
 		17BD472C0DE85550008FC970 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				17F21F7B12EB6E260099D065 /* Tests-Info.plist */,
 				17BD47390DE855CC008FC970 /* VersionHistory.txt */,
 			);
 			name = Other;
@@ -122,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				8DD76FA10486AA7600D96B5E /* SCEvents */,
+				17F21F7A12EB6E260099D065 /* Tests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -129,6 +146,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		17F21F7912EB6E260099D065 /* Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17F21F7E12EB6E270099D065 /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildPhases = (
+				17F21F7512EB6E260099D065 /* Resources */,
+				17F21F7612EB6E260099D065 /* Sources */,
+				17F21F7712EB6E260099D065 /* Frameworks */,
+				17F21F7812EB6E260099D065 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Tests;
+			productName = Tests;
+			productReference = 17F21F7A12EB6E260099D065 /* Tests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 		8DD76F960486AA7600D96B5E /* SCEvents */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "SCEvents" */;
@@ -166,11 +201,47 @@
 			projectRoot = "";
 			targets = (
 				8DD76F960486AA7600D96B5E /* SCEvents */,
+				17F21F7912EB6E260099D065 /* Tests */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		17F21F7512EB6E260099D065 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		17F21F7812EB6E260099D065 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
+		17F21F7612EB6E260099D065 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17F21F7F12EB6E560099D065 /* SCEventTests.m in Sources */,
+				17F21F8012EB6E560099D065 /* SCEventsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DD76F990486AA7600D96B5E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -187,11 +258,69 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		17F21F7C12EB6E270099D065 /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "Tests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Tests;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Development;
+		};
+		17F21F7D12EB6E270099D065 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "Tests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = Tests;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		1DEB927508733DD40010E9CD /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
@@ -207,6 +336,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INSTALL_PATH = /usr/local/bin;
@@ -251,6 +384,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		17F21F7E12EB6E270099D065 /* Build configuration list for PBXNativeTarget "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17F21F7C12EB6E270099D065 /* Development */,
+				17F21F7D12EB6E270099D065 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "SCEvents" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
