@@ -30,6 +30,12 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
+/**
+ * @class SCEventsTests SCEventsTests.h
+ *
+ * @author Stuart Connolly http://stuconnolly.com/
+ *
+ */
 @interface SCEventsTests : SenTestCase
 
 @end
