@@ -67,7 +67,7 @@
 			children = (
 				08FB7795FE84155DC02AAC07 /* Source */,
 				17F44F5212E8F69600F6F16C /* Tests */,
-				17BD472C0DE85550008FC970 /* Other */,
+				17BD472C0DE85550008FC970 /* Resources */,
 				08FB779DFE84155DC02AAC07 /* Frameworks */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
 			);
@@ -116,13 +116,13 @@
 			path = Example;
 			sourceTree = SOURCE_ROOT;
 		};
-		17BD472C0DE85550008FC970 /* Other */ = {
+		17BD472C0DE85550008FC970 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				17F21F7B12EB6E260099D065 /* Tests-Info.plist */,
 				17BD47390DE855CC008FC970 /* VersionHistory.txt */,
 			);
-			name = Other;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		17F44F5212E8F69600F6F16C /* Tests */ = {
