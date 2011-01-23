@@ -28,66 +28,65 @@
  *  OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import <SenTestingKit/SenTestingKit.h>
+#import "SCEventTests.h"
+#import "SCEvent.h"
 
-/**
- * @class SCEventsTest SCEventsTest.h
- *
- * @author Stuart Connolly http://stuconnolly.com/
- *
- */
-@interface SCEventTests : SenTestCase
-
-@end
+// Constants
+static NSUInteger SCEventTestId  = 17872;
+static FSEventStreamEventFlags SCEventTestFlags = 0;
+static NSString *SCEventTestPath = @"/Users/stuart/Documents";
 
 @implementation SCEventTests
+
+@synthesize _eventId;
+@synthesize _eventDate;
+@synthesize _eventPath;
+@synthesize _eventFlag;
 
 #pragma mark -
 #pragma mark Setup and teardown
 
 - (void)setUp
 {
+	NSDate *date = [NSDate date];
 	
+	_event = [[SCEvent alloc] initWithEventId:SCEventTestId 
+									eventDate:date
+									eventPath:SCEventTestPath
+									eventFlag:SCEventTestFlags];
+	
+	_eventId   = SCEventTestId;
+	_eventDate = date;
+	_eventPath = SCEventTestPath;
+	_eventFlag = SCEventTestFlags;
 }
 
 - (void)tearDown
 {
-	
+	[_event release], _event = nil;
 }
 
 #pragma mark -
 #pragma mark Tests
 
-/**
- *
- */
 - (void)testEventId
 {
-	
+	STAssertEquals(_eventId, [_event eventId], nil);
 }
 
-/**
- *
- */
 - (void)testEventDate
 {
-	
+	STAssertEquals(_eventDate, [_event eventDate], nil);
 }
 
-/**
- *
- */
 - (void)testEventPath
 {
-	
+	STAssertEquals(_eventPath, [_event eventPath], nil);
 }
 
-/**
- *
- */
 - (void)testEventFlag
 {
-	
+	STAssertEquals(_eventFlag, [_event eventFlag], nil);
 }
 
 @end

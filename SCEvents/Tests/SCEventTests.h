@@ -28,19 +28,22 @@
  *  OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
-#import <CoreServices/CoreServices.h>
+#import <SenTestingKit/SenTestingKit.h>
+
+@class SCEvent;
 
 /**
- * @class SCEvent SCEvent.h
+ * @class SCEventsTest SCEventsTest.h
  *
  * @author Stuart Connolly http://stuconnolly.com/
  *
- * Class representing a single file system event.
+ * SCEvent tests class.
  */
-@interface SCEvent : NSObject 
+@interface SCEventTests : SenTestCase
 {
-    NSUInteger _eventId;
+	SCEvent *_event;
+	
+	NSUInteger _eventId;
     NSDate *_eventDate;
     NSString *_eventPath;
     FSEventStreamEventFlags _eventFlag;
@@ -65,15 +68,5 @@
  * @property _eventFlag The flags that are associated with the event.
  */
 @property (readwrite, assign, getter=eventFlag, setter=setEventFlag:) FSEventStreamEventFlags _eventFlag;
-
-+ (SCEvent *)eventWithEventId:(NSUInteger)identifier 
-					eventDate:(NSDate *)date 
-					eventPath:(NSString *)path 
-					eventFlag:(FSEventStreamEventFlags)flag;
-
-- (id)initWithEventId:(NSUInteger)identifier 
-			eventDate:(NSDate *)date 
-			eventPath:(NSString *)path 
-			eventFlag:(FSEventStreamEventFlags)flag;
 
 @end

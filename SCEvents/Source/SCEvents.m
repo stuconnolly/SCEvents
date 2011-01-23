@@ -32,15 +32,13 @@
 #import "SCEvent.h"
 
 /**
- *
- *
+ * Private API
  */
 @interface SCEvents (PrivateAPI)
 
-static void _setup_events_stream(SCEvents *watcher,
-								 FSEventStreamRef stream, 
-								 CFArrayRef paths, 
-								 CFTimeInterval latency);
+static FSEventStreamRef _create_events_stream(SCEvents *watcher,
+											  CFArrayRef paths, 
+											  CFTimeInterval latency);
 
 static void _events_callback(ConstFSEventStreamRef streamRef, 
 							 void *clientCallBackInfo, 
@@ -143,7 +141,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
     
     [self setWatchedPaths:paths];
     
-	_setup_events_stream(self, _eventStream, ((CFArrayRef)_watchedPaths), _notificationLatency);
+	_eventStream = _create_events_stream(self, ((CFArrayRef)_watchedPaths), _notificationLatency);
     
     // Schedule the event stream on the supplied run loop
     FSEventStreamScheduleWithRunLoop(_eventStream, [runLoop getCFRunLoop], kCFRunLoopDefaultMode);
@@ -230,7 +228,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  * @param paths
  * @param latency
  */
-static void _setup_events_stream(SCEvents *watcher, FSEventStreamRef stream, CFArrayRef paths, CFTimeInterval latency)
+static FSEventStreamRef _create_events_stream(SCEvents *watcher, CFArrayRef paths, CFTimeInterval latency)
 {
 	FSEventStreamContext callbackInfo;
 	
@@ -239,16 +237,14 @@ static void _setup_events_stream(SCEvents *watcher, FSEventStreamRef stream, CFA
 	callbackInfo.retain  = NULL;
 	callbackInfo.release = NULL;
 	callbackInfo.copyDescription = NULL;
-	
-	if (stream) FSEventStreamRelease(stream);
     
-    stream = FSEventStreamCreate(kCFAllocatorDefault, 
-								 &_events_callback,
-								 &callbackInfo, 
-								 paths, 
-								 kFSEventStreamEventIdSinceNow, 
-								 latency, 
-								 kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagWatchRoot);
+    return FSEventStreamCreate(kCFAllocatorDefault, 
+							   &_events_callback,
+							   &callbackInfo, 
+							   paths, 
+							   kFSEventStreamEventIdSinceNow, 
+							   latency, 
+							   kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagWatchRoot);
 }
 
 /**

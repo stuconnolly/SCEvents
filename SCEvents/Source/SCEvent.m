@@ -95,7 +95,11 @@
  */
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ { eventId = %ld, eventPath = %@, eventFlag = %ld } >", [self className], ((unsigned long)_eventId), [self eventPath], ((unsigned long)_eventFlag)];
+	return [NSString stringWithFormat:@"<%@ { eventId = %ld, eventPath = %@, eventFlag = %ld } >", 
+			[self className], 
+			((unsigned long)_eventId), 
+			[self eventPath], 
+			((unsigned long)_eventFlag)];
 }
 
 #pragma mark -

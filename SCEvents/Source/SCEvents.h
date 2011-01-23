@@ -40,6 +40,7 @@
  *
  * @author Stuart Connolly http://stuconnolly.com/
  *
+ * An Objective-C wrapper for the FSEvents C API.
  */
 @interface SCEvents : NSObject 
 {
@@ -58,7 +59,7 @@
 /**
  * @property _delegate
  */
-@property (readwrite, assign, getter=delegate, setter=setDelegate:) id _delegate;
+@property (readwrite, assign, getter=delegate, setter=setDelegate:) id <SCEventListenerProtocol> _delegate;
 
 /**
  * @property _isWatchingPaths
