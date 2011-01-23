@@ -28,27 +28,20 @@
  *  OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "SCEventsTests.h"
-#import "SCEvents.h"
+#import <SenTestingKit/SenTestingKit.h>
 
-@implementation SCEventsTests
+@class SCEvents;
 
-#pragma mark -
-#pragma mark Setup and teardown
-
-- (void)setUp
+/**
+ * @class SCEventsTests SCEventsTests.h
+ *
+ * @author Stuart Connolly http://stuconnolly.com/
+ *
+ * SCEvents tests class.
+ */
+@interface SCEventsTests : SenTestCase
 {
-	
+	SCEvents *_watcher;
 }
-
-- (void)tearDown
-{
-	[_watcher stopWatchingPaths];
-	
-	[_watcher release], _watcher = nil;
-}
-
-#pragma mark -
-#pragma mark Tests
 
 @end
