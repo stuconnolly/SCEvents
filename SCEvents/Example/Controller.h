@@ -35,7 +35,8 @@
  * @class Controller Controller.h
  *
  * @author Stuart Connolly http://stuconnolly.com/
- *
+ * 
+ * Example controller class.
  */
 @interface Controller : NSObject <SCEventListenerProtocol>
 {

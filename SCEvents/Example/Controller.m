@@ -64,8 +64,8 @@
  * This is the only method to be implemented to conform to the SCEventListenerProtocol.
  * As this is only an example the event received is simply printed to the console.
  *
- * @param pathwatcher
- * @param event
+ * @param pathwatcher The SCEvents instance that received the event
+ * @param event       The actual event
  */
 - (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event
 {

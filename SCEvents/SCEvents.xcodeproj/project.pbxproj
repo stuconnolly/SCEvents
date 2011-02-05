@@ -26,7 +26,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 08FB7793FE84155DC02AAC07 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8DD76F960486AA7600D96B5E /* SCEvents */;
+			remoteGlobalIDString = 8DD76F960486AA7600D96B5E;
 			remoteInfo = SCEvents;
 		};
 /* End PBXContainerItemProxy section */

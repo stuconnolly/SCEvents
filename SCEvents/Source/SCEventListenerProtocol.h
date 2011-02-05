@@ -35,6 +35,7 @@
  *
  * @author Stuart Connolly http://stuconnolly.com/
  *
+ * SCEvents' event listenser protocol. Delegates must implement this protocol to be notified of events.
  */
 @protocol SCEventListenerProtocol
 
@@ -43,8 +44,8 @@
  * event occurs. The instance of SCEvents which received the event and the event
  * itself are passed as parameters.
  *
- * @param
- * @param
+ * @param pathwatcher The SCEvents instance that received the event
+ * @param event       The actual event
  */
 - (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event;
 

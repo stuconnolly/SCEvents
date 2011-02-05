@@ -44,58 +44,58 @@
  */
 @interface SCEvents : NSObject 
 {
-    id <SCEventListenerProtocol> _delegate;    // The delegate that SCEvents is to notify when events occur.
+    id <SCEventListenerProtocol> _delegate; 
     
-    BOOL             _isWatchingPaths;         // Is the events stream currently running.
-    BOOL             _ignoreEventsFromSubDirs; // Ignore events from sub-directories of the excluded paths. Defaults to YES.
-    FSEventStreamRef _eventStream;             // The actual FSEvents stream reference.
-    CFTimeInterval   _notificationLatency;     // The latency time of which SCEvents is notified by FSEvents of events. Defaults to 3 seconds.
+    BOOL             _isWatchingPaths;
+    BOOL             _ignoreEventsFromSubDirs;
+    FSEventStreamRef _eventStream;
+    CFTimeInterval   _notificationLatency;
       
-    SCEvent          *_lastEvent;              // The last event that occurred and that was delivered to the delegate.
-    NSMutableArray   *_watchedPaths;           // The paths that are to be watched for events.
-    NSMutableArray   *_excludedPaths;          // The paths that SCEvents should ignore events from and not deliver to the delegate.
+    SCEvent          *_lastEvent;
+    NSArray          *_watchedPaths;
+    NSArray          *_excludedPaths;
 }
 
 /**
- * @property _delegate
+ * @property _delegate The delegate that SCEvents is to notify when events occur
  */
 @property (readwrite, assign, getter=delegate, setter=setDelegate:) id <SCEventListenerProtocol> _delegate;
 
 /**
- * @property _isWatchingPaths
+ * @property _isWatchingPaths Indicates whether the events stream is currently running
  */
 @property (readonly, getter=isWatchingPaths) BOOL _isWatchingPaths;
 
 /**
- * @property _ignoreEventsFromSubDirs
+ * @property _ignoreEventsFromSubDirs Indicates whether events from sub-directories of the excluded paths are ignored. Defaults to YES.
  */
 @property (readwrite, assign, getter=ignoreEventsFromSubDirs, setter=setIgnoreEventsFromSubDirs:) BOOL _ignoreEventsFromSubDirs;
 
 /**
- * @property _lastEvent
+ * @property _lastEvent The last event that occurred and that was delivered to the delegate.
  */
 @property (readwrite, retain, getter=lastEvent, setter=setLastEvent:) SCEvent *_lastEvent;
 
 /**
- * @property _notificationLatency
+ * @property _notificationLatency The latency time of which SCEvents is notified by FSEvents of events. Defaults to 3 seconds.
  */
 @property (readwrite, assign, getter=notificationLatency, setter=setNotificationLatency:) double _notificationLatency;
 
 /**
- * @property _watchedPaths
+ * @property _watchedPaths The paths that are to be watched for events.
  */
-@property (readwrite, retain, getter=watchedPaths, setter=setWatchedPaths:) NSMutableArray *_watchedPaths;
+@property (readwrite, retain, getter=watchedPaths, setter=setWatchedPaths:) NSArray *_watchedPaths;
 
 /**
- * @property _excludedPaths
+ * @property _excludedPaths The paths that SCEvents should ignore events from and not deliver to the delegate.
  */
-@property (readwrite, retain, getter=excludedPaths, setter=setExcludedPaths:) NSMutableArray *_excludedPaths;
+@property (readwrite, retain, getter=excludedPaths, setter=setExcludedPaths:) NSArray *_excludedPaths;
 
 - (BOOL)flushEventStreamSync;
 - (BOOL)flushEventStreamAsync;
 
-- (BOOL)startWatchingPaths:(NSMutableArray *)paths;
-- (BOOL)startWatchingPaths:(NSMutableArray *)paths onRunLoop:(NSRunLoop *)runLoop;
+- (BOOL)startWatchingPaths:(NSArray *)paths;
+- (BOOL)startWatchingPaths:(NSArray *)paths onRunLoop:(NSRunLoop *)runLoop;
 
 - (BOOL)stopWatchingPaths;
 

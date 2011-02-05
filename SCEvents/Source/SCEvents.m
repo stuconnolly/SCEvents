@@ -31,6 +31,10 @@
 #import "SCEvents.h"
 #import "SCEvent.h"
 
+// Constants
+static const CGFloat SCEventsDefaultNotificationLatency = 3.0;
+static const NSUInteger SCEventsDefaultIgnoreEventsFromSubDirs = 1;
+
 /**
  * Private API
  */
@@ -65,15 +69,15 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 /**
  * Initializes an instance of SCEvents setting its default values.
  *
- * @return 
+ * @return The initialized SCEvents instance
  */
 - (id)init
 {
     if ((self = [super init])) {
         _isWatchingPaths = NO;
         
-        [self setNotificationLatency:3.0];
-        [self setIgnoreEventsFromSubDirs:YES]; 
+        [self setNotificationLatency:SCEventsDefaultNotificationLatency];
+        [self setIgnoreEventsFromSubDirs:SCEventsDefaultNotificationLatency]; 
     }
     
     return self;
@@ -86,7 +90,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  * Flushes the event stream synchronously by sending events that have already 
  * occurred but not yet delivered.
  *
- * @return
+ * @return A BOOL indicating the sucess or failure
  */
 - (BOOL)flushEventStreamSync
 {
@@ -101,7 +105,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  * Flushes the event stream asynchronously by sending events that have already 
  * occurred but not yet delivered.
  *
- * @return
+ * @return A BOOL indicating the sucess or failure
  */
 - (BOOL)flushEventStreamAsync
 {
@@ -115,11 +119,11 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 /**
  * Starts watching the supplied array of paths for events on the current run loop.
  *
- * @param
+ * @param paths An array of paths to watch
  *
- * @return
+ * @return A BOOL indicating the success or failure
  */
-- (BOOL)startWatchingPaths:(NSMutableArray *)paths
+- (BOOL)startWatchingPaths:(NSArray *)paths
 {
     return [self startWatchingPaths:paths onRunLoop:[NSRunLoop currentRunLoop]];
 }
@@ -130,12 +134,12 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  * there are no paths to watch or the stream is already running then false is
  * returned.
  *
- * @param paths
- * @param runLoop
+ * @param paths   An array of paths to watch
+ * @param runLoop The runloop the events stream is to be scheduled on
  *
- * @return
+ * @return A BOOL indicating the success or failure
  */
-- (BOOL)startWatchingPaths:(NSMutableArray *)paths onRunLoop:(NSRunLoop *)runLoop
+- (BOOL)startWatchingPaths:(NSArray *)paths onRunLoop:(NSRunLoop *)runLoop
 {
     if (([paths count] == 0) || (_isWatchingPaths)) return NO;
     
@@ -159,7 +163,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  * to indicate the success of stopping the stream. False is return if this method 
  * is called when the stream is not already running.
  *
- * @return
+ * @return A BOOL indicating the success or failure
  */
 - (BOOL)stopWatchingPaths
 {
@@ -194,7 +198,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  * Provides the string used when printing this object in NSLog, etc. Useful for
  * debugging purposes.
  *
- * @return
+ * @return The description string
  */
 - (NSString *)description
 {
@@ -292,7 +296,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
          */
         
         NSString *eventPath = [((NSArray *)eventPaths) objectAtIndex:i];
-        NSMutableArray *excludedPaths = [pathWatcher excludedPaths];
+        NSArray *excludedPaths = [pathWatcher excludedPaths];
         
         // Check to see if the event should be ignored if it's path is in the exclude list
         if ([excludedPaths containsObject:eventPath]) {
@@ -318,7 +322,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 				eventPath = [eventPath substringToIndex:([[((NSArray *)eventPaths) objectAtIndex:i] length] - 1)];
 			}
             
-            SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:eventPath eventFlag:eventFlags[i]];
+            SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:eventPath eventFlags:eventFlags[i]];
                 
             if ([[pathWatcher delegate] conformsToProtocol:@protocol(SCEventListenerProtocol)]) {
                 [[pathWatcher delegate] pathWatcher:pathWatcher eventOccurred:event];

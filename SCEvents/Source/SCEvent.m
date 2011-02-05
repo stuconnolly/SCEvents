@@ -35,50 +35,50 @@
 @synthesize _eventId;
 @synthesize _eventDate;
 @synthesize _eventPath;
-@synthesize _eventFlag;
+@synthesize _eventFlags;
 
 #pragma mark -
 #pragma mark Initialisation
 
 /**
- * Returns an initialized instance of SCEvent using the supplied event ID, path 
+ * Returns an initialized instance of SCEvent using the supplied event ID, date, path 
  * and flag.
  *
- * @param 
- * @param
- * @param
- * @param
+ * @param identifer The ID of the event
+ * @param date      The date of the event
+ * @param path      The file system path of the event
+ * @param flags     The flags associated with the event
  *
- * @return
+ * @return The initialized (autoreleased) instance
  */
 + (SCEvent *)eventWithEventId:(NSUInteger)identifier 
 					eventDate:(NSDate *)date 
 					eventPath:(NSString *)path 
-					eventFlag:(FSEventStreamEventFlags)flag
+				   eventFlags:(FSEventStreamEventFlags)flags
 {
-    return [[[SCEvent alloc] initWithEventId:identifier eventDate:date eventPath:path eventFlag:flag] autorelease];
+    return [[[SCEvent alloc] initWithEventId:identifier eventDate:date eventPath:path eventFlags:flags] autorelease];
 }
 
 /**
  * Initializes an instance of SCEvent using the supplied event ID, path and flag.
  *
- * @param 
- * @param
- * @param
- * @param
+ * @param identifer The ID of the event
+ * @param date      The date of the event
+ * @param path      The file system path of the event
+ * @param flags     The flags associated with the event
  *
- * @return
+ * @return The initialized instance
  */
 - (id)initWithEventId:(NSUInteger)identifier 
 			eventDate:(NSDate *)date 
 			eventPath:(NSString *)path 
-			eventFlag:(FSEventStreamEventFlags)flag
+		   eventFlags:(FSEventStreamEventFlags)flags
 {
     if ((self = [super init])) {
         [self setEventId:identifier];
         [self setEventDate:date];
         [self setEventPath:path];
-        [self setEventFlag:flag];
+        [self setEventFlags:flags];
     }
     
     return self;
@@ -91,7 +91,7 @@
  * Provides the string used when printing this object in NSLog, etc. Useful for
  * debugging purposes.
  *
- * @return
+ * @return The description string
  */
 - (NSString *)description
 {
@@ -99,7 +99,7 @@
 			[self className], 
 			((unsigned long)_eventId), 
 			[self eventPath], 
-			((unsigned long)_eventFlag)];
+			((unsigned long)_eventFlags)];
 }
 
 #pragma mark -

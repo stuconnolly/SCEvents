@@ -43,7 +43,7 @@
     NSUInteger _eventId;
     NSDate *_eventDate;
     NSString *_eventPath;
-    FSEventStreamEventFlags _eventFlag;
+    FSEventStreamEventFlags _eventFlags;
 }
 
 /**
@@ -64,16 +64,16 @@
 /**
  * @property _eventFlag The flags that are associated with the event.
  */
-@property (readwrite, assign, getter=eventFlag, setter=setEventFlag:) FSEventStreamEventFlags _eventFlag;
+@property (readwrite, assign, getter=eventFlags, setter=setEventFlags:) FSEventStreamEventFlags _eventFlags;
 
 + (SCEvent *)eventWithEventId:(NSUInteger)identifier 
 					eventDate:(NSDate *)date 
 					eventPath:(NSString *)path 
-					eventFlag:(FSEventStreamEventFlags)flag;
+					eventFlags:(FSEventStreamEventFlags)flags;
 
 - (id)initWithEventId:(NSUInteger)identifier 
 			eventDate:(NSDate *)date 
 			eventPath:(NSString *)path 
-			eventFlag:(FSEventStreamEventFlags)flag;
+			eventFlags:(FSEventStreamEventFlags)flags;
 
 @end

@@ -41,7 +41,7 @@ static NSString *SCEventTestPath = @"/Users/stuart/Documents";
 @synthesize _eventId;
 @synthesize _eventDate;
 @synthesize _eventPath;
-@synthesize _eventFlag;
+@synthesize _eventFlags;
 
 #pragma mark -
 #pragma mark Setup and teardown
@@ -53,12 +53,12 @@ static NSString *SCEventTestPath = @"/Users/stuart/Documents";
 	_event = [[SCEvent alloc] initWithEventId:SCEventTestId 
 									eventDate:date
 									eventPath:SCEventTestPath
-									eventFlag:SCEventTestFlags];
+								   eventFlags:SCEventTestFlags];
 	
-	_eventId   = SCEventTestId;
-	_eventDate = date;
-	_eventPath = SCEventTestPath;
-	_eventFlag = SCEventTestFlags;
+	_eventId    = SCEventTestId;
+	_eventDate  = date;
+	_eventPath  = SCEventTestPath;
+	_eventFlags = SCEventTestFlags;
 }
 
 - (void)tearDown
@@ -84,9 +84,9 @@ static NSString *SCEventTestPath = @"/Users/stuart/Documents";
 	STAssertEquals(_eventPath, [_event eventPath], nil);
 }
 
-- (void)testEventFlag
+- (void)testEventFlags
 {
-	STAssertEquals(_eventFlag, [_event eventFlag], nil);
+	STAssertEquals(_eventFlags, [_event eventFlags], nil);
 }
 
 @end
