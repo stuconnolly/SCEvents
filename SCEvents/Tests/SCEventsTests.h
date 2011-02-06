@@ -29,6 +29,7 @@
  */
 
 #import <SenTestingKit/SenTestingKit.h>
+#import "SCEventListenerProtocol.h"
 
 @class SCEvents;
 
@@ -39,9 +40,12 @@
  *
  * SCEvents tests class.
  */
-@interface SCEventsTests : SenTestCase
+@interface SCEventsTests : SenTestCase <SCEventListenerProtocol>
 {
 	SCEvents *_watcher;
+	
+	NSString *_pathToWatch;
+	NSString *_pathToIgnore;
 }
 
 @end

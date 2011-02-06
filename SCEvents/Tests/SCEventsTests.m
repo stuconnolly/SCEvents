@@ -31,6 +31,16 @@
 #import "SCEventsTests.h"
 #import "SCEvents.h"
 
+// Constants
+static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
+
+@interface SCEventsTests (SCPrivateAPI)
+
+- (BOOL)_createDirectoryAtPath:(NSString *)path;
+- (BOOL)_deleteDirectoryAtPath:(NSString *)path;
+
+@end
+
 @implementation SCEventsTests
 
 #pragma mark -
@@ -38,11 +48,33 @@
 
 - (void)setUp
 {
+    _watcher = [[SCEvents alloc] init];
+    
+    [_watcher setDelegate:self];
 	
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSAllDomainsMask, YES);
+    
+	_pathToWatch  = ([paths count]) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
+	_pathToIgnore = [_pathToWatch stringByAppendingPathComponent:SCEventsDirectoryToIgnore];
+	    
+	// Create the path to ignore
+	if (![self _createDirectoryAtPath:_pathToIgnore]) {
+		NSLog(@"Unable to create directory to ignore at path: %@. Some tests will fail.", _pathToIgnore);
+	}
+	
+	// Set the paths to be excluded
+	[_watcher setExcludedPaths:[NSMutableArray arrayWithObject:_pathToIgnore]];
+	
+	// Start receiving events
+	[_watcher startWatchingPaths:[NSMutableArray arrayWithObject:_pathToWatch]];
 }
 
 - (void)tearDown
 {
+	if (![self _deleteDirectoryAtPath:_pathToIgnore]) {
+		NSLog(@"You may need to remove this directory manually.");
+	}
+	
 	[_watcher stopWatchingPaths];
 	
 	[_watcher release], _watcher = nil;
@@ -50,5 +82,51 @@
 
 #pragma mark -
 #pragma mark Tests
+
+- (void)testStreamDescription
+{
+	STAssertTrue([[_watcher streamDescription] length], @"");
+}
+
+#pragma mark -
+#pragma mark SCEventListenerProtocol methods
+
+- (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event
+{
+    
+}
+
+#pragma mark -
+#pragma mark Private API
+
+- (BOOL)_createDirectoryAtPath:(NSString *)path
+{
+	NSError *error = nil;
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+	BOOL success = [fileManager createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:&error];
+	
+	if ((!success) || error) {
+		NSLog(@"Unable to create directory at path '%@'. Error was: %@", path, [error localizedDescription]);
+	}
+	
+	return success;
+}
+
+- (BOOL)_deleteDirectoryAtPath:(NSString *)path
+{
+	NSError *error = nil;
+	
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	
+	BOOL success = [fileManager removeItemAtPath:path error:&error];
+	
+	if ((!success) || error) {
+		NSLog(@"Unable to delete directory at path '%@'. Error was: %@", path, [error localizedDescription]);
+	}
+	
+	return success;
+}
 
 @end
