@@ -85,7 +85,7 @@ static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
 
 - (void)testStreamDescription
 {
-	STAssertTrue([[_watcher streamDescription] length], @"");
+	STAssertTrue([[_watcher streamDescription] length], nil);
 }
 
 #pragma mark -
