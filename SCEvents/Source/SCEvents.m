@@ -38,7 +38,7 @@ static const NSUInteger SCEventsDefaultIgnoreEventsFromSubDirs = 1;
 /**
  * Private API
  */
-@interface SCEvents (PrivateAPI)
+@interface SCEvents (SCPrivateAPI)
 
 static FSEventStreamRef _create_events_stream(SCEvents *watcher,
 											  CFArrayRef paths, 
@@ -221,9 +221,8 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
     [super dealloc];
 }
 
-@end
-
-@implementation SCEvents (PrivateAPI)
+#pragma mark -
+#pragma mark Private API
 
 /**
  * 
@@ -318,7 +317,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
         if (!shouldIgnore) {
 			
 			// If present remove the path's trailing slash
-			if ([eventPath hasSuffix:@"/"]) {
+			if (CFStringHasPrefix((CFStringRef)eventPath, (CFStringRef)@"/")) {
 				eventPath = [eventPath substringToIndex:([[((NSArray *)eventPaths) objectAtIndex:i] length] - 1)];
 			}
             
