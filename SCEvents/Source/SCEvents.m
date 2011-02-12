@@ -30,6 +30,7 @@
 
 #import "SCEvents.h"
 #import "SCEvent.h"
+#import "pthread.h"
 
 // Constants
 static const CGFloat SCEventsDefaultNotificationLatency = 3.0;
@@ -75,9 +76,11 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 {
     if ((self = [super init])) {
         _isWatchingPaths = NO;
+		
+		pthread_mutex_init(&_eventsLock, NULL);
         
         [self setNotificationLatency:SCEventsDefaultNotificationLatency];
-        [self setIgnoreEventsFromSubDirs:SCEventsDefaultNotificationLatency]; 
+        [self setIgnoreEventsFromSubDirs:SCEventsDefaultNotificationLatency];
     }
     
     return self;
@@ -94,10 +97,18 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  */
 - (BOOL)flushEventStreamSync
 {
-    if (!_isWatchingPaths) return NO;
+	pthread_mutex_lock(&_eventsLock);
+	
+    if (!_isWatchingPaths) {
+		pthread_mutex_unlock(&_eventsLock);
+		
+		return NO;
+	}
     
     FSEventStreamFlushSync(_eventStream);
     
+	pthread_mutex_unlock(&_eventsLock);
+	
     return YES;
 }
 
@@ -109,10 +120,18 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  */
 - (BOOL)flushEventStreamAsync
 {
-    if (!_isWatchingPaths) return NO;
+    pthread_mutex_lock(&_eventsLock);
+	
+    if (!_isWatchingPaths) {
+		pthread_mutex_unlock(&_eventsLock);
+		
+		return NO;
+	}
     
     FSEventStreamFlushAsync(_eventStream);
     
+	pthread_mutex_unlock(&_eventsLock);
+	
     return YES;
 }
 
@@ -141,7 +160,13 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  */
 - (BOOL)startWatchingPaths:(NSArray *)paths onRunLoop:(NSRunLoop *)runLoop
 {
-    if (([paths count] == 0) || (_isWatchingPaths)) return NO;
+	pthread_mutex_lock(&_eventsLock);
+	
+    if (([paths count] == 0) || (_isWatchingPaths)) {
+		pthread_mutex_unlock(&_eventsLock);
+		
+		return NO;
+	}
     
     [self setWatchedPaths:paths];
     
@@ -155,6 +180,8 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
     
     _isWatchingPaths = YES;
     
+	pthread_mutex_unlock(&_eventsLock);
+	
     return YES;
 }
 
@@ -167,7 +194,13 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  */
 - (BOOL)stopWatchingPaths
 {
-    if (!_isWatchingPaths) return NO;
+	pthread_mutex_lock(&_eventsLock);
+	
+    if (!_isWatchingPaths) {
+		pthread_mutex_lock(&_eventsLock);
+		
+		return NO;
+	}
 	    
     FSEventStreamStop(_eventStream);
     FSEventStreamInvalidate(_eventStream);
@@ -176,6 +209,8 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
     
     _isWatchingPaths = NO;
     
+	pthread_mutex_unlock(&_eventsLock);
+	
     return YES;
 }
 
@@ -186,9 +221,13 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
  */
 - (NSString *)streamDescription
 {
-	if (!_isWatchingPaths) return @"The event stream is not running. Start it by calling: startWatchingPaths:";
+	pthread_mutex_lock(&_eventsLock);
 	
-	return (NSString *)FSEventStreamCopyDescription(_eventStream);
+	NSString *description = (_isWatchingPaths) ? (NSString *)FSEventStreamCopyDescription(_eventStream) : nil;
+	
+	pthread_mutex_unlock(&_eventsLock);
+	
+	return [description autorelease];
 }
 
 #pragma mark -
@@ -214,6 +253,8 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 	// Stop the event stream if it's still running
 	if (_isWatchingPaths) [self stopWatchingPaths];
         
+	pthread_mutex_destroy(&_eventsLock);
+	
 	[_lastEvent release], _lastEvent = nil;
     [_watchedPaths release], _watchedPaths = nil;
     [_excludedPaths release], _excludedPaths = nil;
@@ -322,7 +363,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 			}
             
             SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:eventPath eventFlags:eventFlags[i]];
-                
+			
             if ([[pathWatcher delegate] conformsToProtocol:@protocol(SCEventListenerProtocol)]) {
                 [[pathWatcher delegate] pathWatcher:pathWatcher eventOccurred:event];
             }
