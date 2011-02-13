@@ -315,6 +315,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
     NSUInteger i;
     BOOL shouldIgnore = NO;
     
+	CFArrayRef paths = (CFArrayRef)eventPaths;
     SCEvents *pathWatcher = (SCEvents *)clientCallBackInfo;
     
     for (i = 0; i < numEvents; i++) 
@@ -335,22 +336,23 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
          * calling this callback more frequently.
          */
         
-        NSString *eventPath = [((NSArray *)eventPaths) objectAtIndex:i];
-        NSArray *excludedPaths = [pathWatcher excludedPaths];
+		NSArray *excludedPaths = [pathWatcher excludedPaths];
+        CFStringRef eventPath = CFArrayGetValueAtIndex(paths, i);
         
         // Check to see if the event should be ignored if it's path is in the exclude list
-        if ([excludedPaths containsObject:eventPath]) {
+        if ([excludedPaths containsObject:(NSString *)eventPath]) {
             shouldIgnore = YES;
         }
         else {
             // If we did not find an exact match in the exclude list and we are to ignore events from
             // sub-directories then see if the exclude paths match as a prefix of the event path.
             if ([pathWatcher ignoreEventsFromSubDirs]) {
-                for (NSString *path in [pathWatcher excludedPaths]) {
-                    if ([[(NSArray *)eventPaths objectAtIndex:i] hasPrefix:path]) {
-                        shouldIgnore = YES;
+                for (NSString *path in [pathWatcher excludedPaths]) 
+				{
+					if (CFStringHasPrefix(eventPath, (CFStringRef)path)) {
+						shouldIgnore = YES;
                         break;
-                    }
+					}
                 }
             }
         }
@@ -359,10 +361,10 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 			
 			// If present remove the path's trailing slash
 			if (CFStringHasPrefix((CFStringRef)eventPath, (CFStringRef)@"/")) {
-				eventPath = [eventPath substringToIndex:([[((NSArray *)eventPaths) objectAtIndex:i] length] - 1)];
+				eventPath = CFStringCreateWithSubstring(kCFAllocatorDefault, eventPath, CFRangeMake(0, (CFStringGetLength(eventPath) - 1)));				
 			}
             
-            SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:eventPath eventFlags:eventFlags[i]];
+            SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:(NSString *)eventPath eventFlags:eventFlags[i]];
 			
             if ([[pathWatcher delegate] conformsToProtocol:@protocol(SCEventListenerProtocol)]) {
                 [[pathWatcher delegate] pathWatcher:pathWatcher eventOccurred:event];
