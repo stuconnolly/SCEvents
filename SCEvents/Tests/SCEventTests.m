@@ -32,9 +32,9 @@
 #import "SCEvent.h"
 
 // Constants
-static NSUInteger SCEventTestId  = 17872;
-static FSEventStreamEventFlags SCEventTestFlags = 0;
-static NSString *SCEventTestPath = @"/Users/stuart/Documents";
+static NSUInteger SCEventTestId = 17872;
+static NSString *SCEventTestDir = @"Documents";
+static FSEventStreamEventFlags SCEventTestFlags = kFSEventStreamEventFlagNone;
 
 @implementation SCEventTests
 
@@ -49,15 +49,16 @@ static NSString *SCEventTestPath = @"/Users/stuart/Documents";
 - (void)setUp
 {
 	NSDate *date = [NSDate date];
+	NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:SCEventTestDir];
 	
 	_event = [[SCEvent alloc] initWithEventId:SCEventTestId 
 									eventDate:date
-									eventPath:SCEventTestPath
+									eventPath:path
 								   eventFlags:SCEventTestFlags];
 	
 	_eventId    = SCEventTestId;
 	_eventDate  = date;
-	_eventPath  = SCEventTestPath;
+	_eventPath  = path;
 	_eventFlags = SCEventTestFlags;
 }
 
