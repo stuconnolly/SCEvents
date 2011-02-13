@@ -215,9 +215,9 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 }
 
 /**
+ * Provides a description of the event stream. Useful for debugging purposes.
  *
- *
- * @return
+ * @return The descroption string
  */
 - (NSString *)streamDescription
 {
