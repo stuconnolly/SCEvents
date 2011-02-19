@@ -52,6 +52,8 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 							 const FSEventStreamEventFlags eventFlags[], 
 							 const FSEventStreamEventId eventIds[]);
 
+static CFStringRef _strip_trailing_slash(CFStringRef string);
+
 @end
 
 @implementation SCEvents
@@ -266,11 +268,11 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 #pragma mark Private API
 
 /**
- * 
+ * Creates and returns the initialised events stream.
  *
- * @param stream
- * @param paths
- * @param latency
+ * @param watcher The watcher instance that is to be supplied to the callback function  
+ * @param paths   The paths that are to be 'watched'
+ * @param latency The notification latency
  */
 static FSEventStreamRef _create_events_stream(SCEvents *watcher, CFArrayRef paths, CFTimeInterval latency)
 {
@@ -298,12 +300,12 @@ static FSEventStreamRef _create_events_stream(SCEvents *watcher, CFArrayRef path
  * called with more than one event and so multiple instances of SCEvent are created
  * and the delegate notified.
  *
- * @param streamRef
- * @param clientCallBackInfo
- * @param numEvents
- * @param eventPaths
- * @param eventFlags
- * @param eventIds
+ * @param streamRef          The calling stream reference
+ * @param clientCallBackInfo Any client callback info that was supplied when the stream was created
+ * @param numEvents          The number of events being supplied
+ * @param eventPaths         An array of the event's paths
+ * @param eventFlags         An array of flags associated with the events
+ * @param eventIds           An array of IDs associated with the events
  */
 static void _events_callback(ConstFSEventStreamRef streamRef, 
 							  void *clientCallBackInfo, 
@@ -360,11 +362,11 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
         if (!shouldIgnore) {
 			
 			// If present remove the path's trailing slash
-			if (CFStringHasPrefix((CFStringRef)eventPath, (CFStringRef)@"/")) {
-				eventPath = CFStringCreateWithSubstring(kCFAllocatorDefault, eventPath, CFRangeMake(0, (CFStringGetLength(eventPath) - 1)));				
-			}
+			eventPath = _strip_trailing_slash(eventPath);
             
             SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:(NSString *)eventPath eventFlags:eventFlags[i]];
+			
+			CFRelease(eventPath);
 			
             if ([[pathWatcher delegate] conformsToProtocol:@protocol(SCEventListenerProtocol)]) {
                 [[pathWatcher delegate] pathWatcher:pathWatcher eventOccurred:event];
@@ -375,6 +377,25 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
             }
         }
     }
+}
+
+/**
+ * If present, strips the trailing slash from the supplied string. Note, that the caler is
+ * responsible for freeing the associate memory.
+ *
+ * @param string The string that is to be stripped
+ *
+ @ @return The resulting string
+ */
+static CFStringRef _strip_trailing_slash(CFStringRef string)
+{
+	CFStringRef stripped = string;
+	
+	if (CFStringHasPrefix((CFStringRef)stripped, CFSTR("/"))) {
+		stripped = CFStringCreateWithSubstring(kCFAllocatorDefault, stripped, CFRangeMake(0, (CFStringGetLength(stripped) - 1)));				
+	}
+	
+	return (stripped) ? CFMakeCollectable(stripped) : string;
 }
 
 @end
