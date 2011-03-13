@@ -39,7 +39,7 @@ static const NSUInteger SCEventsDefaultIgnoreEventsFromSubDirs = 1;
 /**
  * Private API
  */
-@interface SCEvents (SCPrivateAPI)
+@interface SCEvents ()
 
 static FSEventStreamRef _create_events_stream(SCEvents *watcher,
 											  CFArrayRef paths, 
@@ -82,7 +82,7 @@ static CFStringRef _strip_trailing_slash(CFStringRef string);
 		pthread_mutex_init(&_eventsLock, NULL);
         
         [self setNotificationLatency:SCEventsDefaultNotificationLatency];
-        [self setIgnoreEventsFromSubDirs:SCEventsDefaultNotificationLatency];
+        [self setIgnoreEventsFromSubDirs:SCEventsDefaultIgnoreEventsFromSubDirs];
     }
     
     return self;
@@ -339,7 +339,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
          */
         
 		NSArray *excludedPaths = [pathWatcher excludedPaths];
-        CFStringRef eventPath = CFArrayGetValueAtIndex(paths, i);
+        CFStringRef eventPath = CFArrayGetValueAtIndex(paths, (CFIndex)i);
         
         // Check to see if the event should be ignored if it's path is in the exclude list
         if ([excludedPaths containsObject:(NSString *)eventPath]) {
@@ -364,7 +364,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 			// If present remove the path's trailing slash
 			eventPath = _strip_trailing_slash(eventPath);
             
-            SCEvent *event = [SCEvent eventWithEventId:eventIds[i] eventDate:[NSDate date] eventPath:(NSString *)eventPath eventFlags:eventFlags[i]];
+            SCEvent *event = [SCEvent eventWithEventId:(NSUInteger)eventIds[i] eventDate:[NSDate date] eventPath:(NSString *)eventPath eventFlags:eventFlags[i]];
 			
 			CFRelease(eventPath);
 			
