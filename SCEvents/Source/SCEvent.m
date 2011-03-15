@@ -54,7 +54,7 @@
 + (SCEvent *)eventWithEventId:(NSUInteger)identifier 
 					eventDate:(NSDate *)date 
 					eventPath:(NSString *)path 
-				   eventFlags:(FSEventStreamEventFlags)flags
+				   eventFlags:(SCEventFlags)flags
 {
     return [[[SCEvent alloc] initWithEventId:identifier eventDate:date eventPath:path eventFlags:flags] autorelease];
 }
@@ -72,7 +72,7 @@
 - (id)initWithEventId:(NSUInteger)identifier 
 			eventDate:(NSDate *)date 
 			eventPath:(NSString *)path 
-		   eventFlags:(FSEventStreamEventFlags)flags
+		   eventFlags:(SCEventFlags)flags
 {
     if ((self = [super init])) {
         [self setEventId:identifier];

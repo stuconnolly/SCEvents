@@ -31,6 +31,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreServices/CoreServices.h>
 
+#import "SCConstants.h"
+
 /**
  * @class SCEvent SCEvent.h
  *
@@ -43,7 +45,7 @@
     NSUInteger _eventId;
     NSDate *_eventDate;
     NSString *_eventPath;
-    FSEventStreamEventFlags _eventFlags;
+    SCEventFlags _eventFlags;
 }
 
 /**
@@ -64,16 +66,16 @@
 /**
  * @property _eventFlag The flags that are associated with the event.
  */
-@property (readwrite, assign, getter=eventFlags, setter=setEventFlags:) FSEventStreamEventFlags _eventFlags;
+@property (readwrite, assign, getter=eventFlags, setter=setEventFlags:) SCEventFlags _eventFlags;
 
 + (SCEvent *)eventWithEventId:(NSUInteger)identifier 
 					eventDate:(NSDate *)date 
 					eventPath:(NSString *)path 
-					eventFlags:(FSEventStreamEventFlags)flags;
+					eventFlags:(SCEventFlags)flags;
 
 - (id)initWithEventId:(NSUInteger)identifier 
 			eventDate:(NSDate *)date 
 			eventPath:(NSString *)path 
-			eventFlags:(FSEventStreamEventFlags)flags;
+			eventFlags:(SCEventFlags)flags;
 
 @end
