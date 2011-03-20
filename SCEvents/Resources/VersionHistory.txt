@@ -2,8 +2,9 @@ SCEVENTS VERSION HISTORY
 ------------------------
 
 VERSION 0.1.5 (build )
-Released on January , 2011
-	-
+Released on March , 2011
+	- [NEW] SCEvents is no longer a singleton.
+	- [NEW] Added thread safety.
 
 VERSION 0.1.4 (build 50)
 Released on December 5, 2009
