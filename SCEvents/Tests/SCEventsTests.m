@@ -31,7 +31,6 @@
 #import "SCEventsTests.h"
 #import "SCEvents.h"
 
-// Constants
 static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
 
 @interface SCEventsTests ()
