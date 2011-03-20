@@ -32,6 +32,8 @@
 #import "SCEvents.h"
 #import "SCEvent.h"
 
+static NSString *SCEventsDownloadsDirectory = @"Downloads";
+
 @implementation Controller
 
 /**
@@ -48,7 +50,7 @@
     [_events setDelegate:self];
     
     NSMutableArray *paths = [NSMutableArray arrayWithObject:NSHomeDirectory()];
-    NSMutableArray *excludePaths = [NSMutableArray arrayWithObject:[NSHomeDirectory() stringByAppendingPathComponent:@"Downloads"]];
+    NSMutableArray *excludePaths = [NSMutableArray arrayWithObject:[NSHomeDirectory() stringByAppendingPathComponent:SCEventsDownloadsDirectory]];
     
 	// Set the paths to be excluded
 	[_events setExcludedPaths:excludePaths];
