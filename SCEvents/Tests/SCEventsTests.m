@@ -34,7 +34,7 @@
 // Constants
 static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
 
-@interface SCEventsTests (SCPrivateAPI)
+@interface SCEventsTests ()
 
 - (BOOL)_createDirectoryAtPath:(NSString *)path;
 - (BOOL)_deleteDirectoryAtPath:(NSString *)path;
