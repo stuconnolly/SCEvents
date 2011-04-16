@@ -30,11 +30,12 @@
 
 #import "SCEventTests.h"
 #import "SCEvent.h"
+#import "SCConstants.h"
 
 // Constants
 static NSUInteger SCEventTestId = 17872;
 static NSString *SCEventTestDir = @"Documents";
-static FSEventStreamEventFlags SCEventTestFlags = kFSEventStreamEventFlagNone;
+static SCEventFlags SCEventTestFlags = SCEventStreamEventFlagNone;
 
 @implementation SCEventTests
 

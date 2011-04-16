@@ -46,6 +46,9 @@
 	
 	NSString *_pathToWatch;
 	NSString *_pathToIgnore;
+	NSString *_tempFilePath;
+	
+	NSUInteger _eventsOccurred;
 }
 
 @end

@@ -31,12 +31,14 @@
 #import "SCEventsTests.h"
 #import "SCEvents.h"
 
+static NSString *SCEventsTempFile = @"SCEventsTempTest.tmp";
 static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
 
 @interface SCEventsTests ()
 
+- (BOOL)_createTempFileAtParh:(NSString *)path;
 - (BOOL)_createDirectoryAtPath:(NSString *)path;
-- (BOOL)_deleteDirectoryAtPath:(NSString *)path;
+- (BOOL)_deleteItemAtPath:(NSString *)path;
 
 @end
 
@@ -50,29 +52,35 @@ static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
     _watcher = [[SCEvents alloc] init];
     
     [_watcher setDelegate:self];
+	[_watcher setNotificationLatency:0.1];
 	
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSAllDomainsMask, YES);
     
 	_pathToWatch  = ([paths count]) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
+	
 	_pathToIgnore = [_pathToWatch stringByAppendingPathComponent:SCEventsDirectoryToIgnore];
+	_tempFilePath = [_pathToWatch stringByAppendingPathComponent:SCEventsTempFile];
 	    
 	// Create the path to ignore
-	if (![self _createDirectoryAtPath:_pathToIgnore]) {
-		NSLog(@"Unable to create directory to ignore at path: %@. Some tests will fail.", _pathToIgnore);
-	}
+	[self _createDirectoryAtPath:_pathToIgnore];
 	
 	// Set the paths to be excluded
 	[_watcher setExcludedPaths:[NSMutableArray arrayWithObject:_pathToIgnore]];
 	
 	// Start receiving events
 	[_watcher startWatchingPaths:[NSMutableArray arrayWithObject:_pathToWatch]];
+	
+	// Create the temp file to trigger some events
+	if (![self _createTempFileAtParh:_tempFilePath]) {
+		NSLog(@"Unable to create temporary test file at path: %@. Some tests will fail.", _tempFilePath);
+	}
 }
 
 - (void)tearDown
 {
-	if (![self _deleteDirectoryAtPath:_pathToIgnore]) {
-		NSLog(@"You may need to remove this directory manually.");
-	}
+	// Delete dirs/files created for tests
+	[self _deleteItemAtPath:_pathToIgnore];
+	[self _deleteItemAtPath:_tempFilePath];
 	
 	[_watcher stopWatchingPaths];
 	
@@ -84,7 +92,14 @@ static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
 
 - (void)testStreamDescription
 {
-	STAssertTrue([[_watcher streamDescription] length], nil);
+	STAssertTrue(([[_watcher streamDescription] length] > 0), nil);
+}
+
+- (void)testEventNotifications
+{	
+	[_watcher flushEventStreamSync];
+	
+	STAssertTrue(_eventsOccurred > 0, nil);
 }
 
 #pragma mark -
@@ -92,19 +107,22 @@ static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
 
 - (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event
 {
-    
+    _eventsOccurred++;
 }
 
 #pragma mark -
 #pragma mark Private API
 
+- (BOOL)_createTempFileAtParh:(NSString *)path
+{			
+	return [[NSFileManager defaultManager] createFileAtPath:path contents:NO attributes:nil];
+}
+
 - (BOOL)_createDirectoryAtPath:(NSString *)path
 {
 	NSError *error = nil;
-	
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	
-	BOOL success = [fileManager createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:&error];
+		
+	BOOL success = [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:NO attributes:nil error:&error];
 	
 	if ((!success) || error) {
 		NSLog(@"Unable to create directory at path '%@'. Error was: %@", path, [error localizedDescription]);
@@ -113,16 +131,14 @@ static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
 	return success;
 }
 
-- (BOOL)_deleteDirectoryAtPath:(NSString *)path
+- (BOOL)_deleteItemAtPath:(NSString *)path
 {
 	NSError *error = nil;
-	
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	
-	BOOL success = [fileManager removeItemAtPath:path error:&error];
+		
+	BOOL success = [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
 	
 	if ((!success) || error) {
-		NSLog(@"Unable to delete directory at path '%@'. Error was: %@", path, [error localizedDescription]);
+		NSLog(@"Unable to delete item at path '%@'. Error was: %@", path, [error localizedDescription]);
 	}
 	
 	return success;
