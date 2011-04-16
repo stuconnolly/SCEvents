@@ -364,7 +364,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 			// If present remove the path's trailing slash
 			eventPath = _strip_trailing_slash(eventPath);
             
-            SCEvent *event = [SCEvent eventWithEventId:(NSUInteger)eventIds[i] eventDate:[NSDate date] eventPath:(NSString *)eventPath eventFlags:eventFlags[i]];
+            SCEvent *event = [SCEvent eventWithEventId:(NSUInteger)eventIds[i] eventDate:[NSDate date] eventPath:(NSString *)eventPath eventFlags:(SCEventFlags)eventFlags[i]];
 			
 			CFRelease(eventPath);
 			
