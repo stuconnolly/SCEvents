@@ -45,7 +45,7 @@
  * itself are passed as parameters.
  *
  * @param pathwatcher The SCEvents instance that received the event
- * @param event       The actual event
+ * @param event       The actual event that occurred
  */
 - (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event;
 
