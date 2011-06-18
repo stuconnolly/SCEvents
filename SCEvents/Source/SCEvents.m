@@ -43,7 +43,8 @@ static const NSUInteger SCEventsDefaultIgnoreEventsFromSubDirs = 1;
 
 static FSEventStreamRef _create_events_stream(SCEvents *watcher,
 											  CFArrayRef paths, 
-											  CFTimeInterval latency);
+											  CFTimeInterval latency,
+											  FSEventStreamEventId sinceWhen);
 
 static void _events_callback(ConstFSEventStreamRef streamRef, 
 							 void *clientCallBackInfo, 
@@ -65,6 +66,7 @@ static CFStringRef _strip_trailing_slash(CFStringRef string);
 @synthesize _notificationLatency;
 @synthesize _watchedPaths;
 @synthesize _excludedPaths;
+@synthesize _resumeFromEventId;
 
 #pragma mark -
 #pragma mark Initialisation
@@ -81,6 +83,7 @@ static CFStringRef _strip_trailing_slash(CFStringRef string);
 		
 		pthread_mutex_init(&_eventsLock, NULL);
         
+		[self setResumeFromEventId:kFSEventStreamEventIdSinceNow];
         [self setNotificationLatency:SCEventsDefaultNotificationLatency];
         [self setIgnoreEventsFromSubDirs:SCEventsDefaultIgnoreEventsFromSubDirs];
     }
@@ -174,7 +177,7 @@ static CFStringRef _strip_trailing_slash(CFStringRef string);
     
     [self setWatchedPaths:paths];
     
-	_eventStream = _create_events_stream(self, ((CFArrayRef)_watchedPaths), _notificationLatency);
+	_eventStream = _create_events_stream(self, ((CFArrayRef)_watchedPaths), _notificationLatency, _resumeFromEventId);
     
     // Schedule the event stream on the supplied run loop
     FSEventStreamScheduleWithRunLoop(_eventStream, _runLoop, kCFRunLoopDefaultMode);
@@ -279,7 +282,7 @@ static CFStringRef _strip_trailing_slash(CFStringRef string);
  * @param paths   The paths that are to be 'watched'
  * @param latency The notification latency
  */
-static FSEventStreamRef _create_events_stream(SCEvents *watcher, CFArrayRef paths, CFTimeInterval latency)
+static FSEventStreamRef _create_events_stream(SCEvents *watcher, CFArrayRef paths, CFTimeInterval latency, FSEventStreamEventId sinceWhen)
 {
 	FSEventStreamContext callbackInfo;
 	
@@ -293,7 +296,7 @@ static FSEventStreamRef _create_events_stream(SCEvents *watcher, CFArrayRef path
 							   &_events_callback,
 							   &callbackInfo, 
 							   paths, 
-							   kFSEventStreamEventIdSinceNow, 
+							   sinceWhen, 
 							   latency, 
 							   kFSEventStreamCreateFlagUseCFTypes | kFSEventStreamCreateFlagWatchRoot);
 }

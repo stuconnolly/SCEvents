@@ -46,17 +46,18 @@
 {
     id <NSObject, SCEventListenerProtocol> _delegate; 
     
-    BOOL             _isWatchingPaths;
-    BOOL             _ignoreEventsFromSubDirs;
-	CFRunLoopRef     _runLoop;
-    FSEventStreamRef _eventStream;
-    CFTimeInterval   _notificationLatency;
+    BOOL                 _isWatchingPaths;
+    BOOL                 _ignoreEventsFromSubDirs;
+	CFRunLoopRef         _runLoop;
+    FSEventStreamRef     _eventStream;
+    CFTimeInterval       _notificationLatency;
+	FSEventStreamEventId _resumeFromEventId;
       
-    SCEvent          *_lastEvent;
-    NSArray          *_watchedPaths;
-    NSArray          *_excludedPaths;
+    SCEvent              *_lastEvent;
+    NSArray              *_watchedPaths;
+    NSArray              *_excludedPaths;
 	
-	pthread_mutex_t  _eventsLock;
+	pthread_mutex_t       _eventsLock;
 }
 
 /**
@@ -93,6 +94,11 @@
  * @property _excludedPaths The paths that SCEvents should ignore events from and not deliver to the delegate.
  */
 @property (readwrite, retain, getter=excludedPaths, setter=setExcludedPaths:) NSArray *_excludedPaths;
+
+/**
+ * @property _resumeFromEventId The event ID from which to resume from when the stream is started.
+ */
+@property (readwrite, assign, getter=resumeFromEventId, setter=setResumeFromEventId:) FSEventStreamEventId _resumeFromEventId;
 
 - (BOOL)flushEventStreamSync;
 - (BOOL)flushEventStreamAsync;
