@@ -164,6 +164,8 @@ static CFStringRef _strip_trailing_slash(CFStringRef string);
 {
 	pthread_mutex_lock(&_eventsLock);
 	
+	_runLoop = [runLoop getCFRunLoop];
+	
     if (([paths count] == 0) || (_isWatchingPaths)) {
 		pthread_mutex_unlock(&_eventsLock);
 		
@@ -175,7 +177,7 @@ static CFStringRef _strip_trailing_slash(CFStringRef string);
 	_eventStream = _create_events_stream(self, ((CFArrayRef)_watchedPaths), _notificationLatency);
     
     // Schedule the event stream on the supplied run loop
-    FSEventStreamScheduleWithRunLoop(_eventStream, [runLoop getCFRunLoop], kCFRunLoopDefaultMode);
+    FSEventStreamScheduleWithRunLoop(_eventStream, _runLoop, kCFRunLoopDefaultMode);
     
     // Start the event stream
     FSEventStreamStart(_eventStream);
@@ -205,6 +207,9 @@ static CFStringRef _strip_trailing_slash(CFStringRef string);
 	}
 	    
     FSEventStreamStop(_eventStream);
+	
+	if (_runLoop) FSEventStreamUnscheduleFromRunLoop(_eventStream, _runLoop, kCFRunLoopDefaultMode);
+	
     FSEventStreamInvalidate(_eventStream);
 	
 	if (_eventStream) FSEventStreamRelease(_eventStream), _eventStream = NULL;

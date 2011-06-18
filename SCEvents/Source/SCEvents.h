@@ -48,6 +48,7 @@
     
     BOOL             _isWatchingPaths;
     BOOL             _ignoreEventsFromSubDirs;
+	CFRunLoopRef     _runLoop;
     FSEventStreamRef _eventStream;
     CFTimeInterval   _notificationLatency;
       
@@ -55,7 +56,7 @@
     NSArray          *_watchedPaths;
     NSArray          *_excludedPaths;
 	
-	pthread_mutex_t _eventsLock;
+	pthread_mutex_t  _eventsLock;
 }
 
 /**
