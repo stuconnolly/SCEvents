@@ -60,7 +60,7 @@ static SCEventFlags SCEventTestFlags = SCEventStreamEventFlagNone;
 	_eventId    = SCEventTestId;
 	_eventDate  = date;
 	_eventPath  = path;
-	_eventFlags = SCEventTestFlags;
+	_eventFlags = SCEventStreamEventFlagNone;
 }
 
 - (void)tearDown
@@ -88,7 +88,7 @@ static SCEventFlags SCEventTestFlags = SCEventStreamEventFlagNone;
 
 - (void)testEventFlags
 {
-	STAssertEquals(_eventFlags, [_event eventFlags], nil);
+	STAssertEquals(SCEventStreamEventFlagNone, [_event eventFlags], nil);
 }
 
 @end
