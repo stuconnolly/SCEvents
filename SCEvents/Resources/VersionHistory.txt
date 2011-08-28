@@ -1,10 +1,12 @@
 SCEVENTS VERSION HISTORY
 ------------------------
 
-VERSION 0.1.5 (build )
-Released on March , 2011
+VERSION 0.1.5 (build 210)
+Released on August 28, 2011
 	- [NEW] SCEvents is no longer a singleton.
 	- [NEW] Added thread safety.
+	- [NEW] The ability resume listening for events from a particular event ID (Tage Borg).
+	- [FIX] Fix an issue where the event stream wasn't be removed from the runloop it was started against (Jerry Krinock).
 
 VERSION 0.1.4 (build 50)
 Released on December 5, 2009
