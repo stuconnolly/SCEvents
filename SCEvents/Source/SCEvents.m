@@ -399,7 +399,7 @@ static CFStringRef _strip_trailing_slash(CFStringRef string)
 {
 	CFStringRef stripped = string;
 	
-	if (CFStringHasPrefix((CFStringRef)stripped, CFSTR("/"))) {
+	if (CFStringHasSuffix((CFStringRef)stripped, CFSTR("/"))) {
 		stripped = CFStringCreateWithSubstring(kCFAllocatorDefault, stripped, CFRangeMake(0, (CFStringGetLength(stripped) - 1)));				
 	}
 	
