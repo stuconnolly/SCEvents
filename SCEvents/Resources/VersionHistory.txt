@@ -1,6 +1,10 @@
 SCEVENTS VERSION HISTORY
 ------------------------
 
+VERSION 0.1.6 (build 213)
+Released on August 31, 2011
+	- [FIX] Fix incorrect use of function to detect trailing slash on event paths.
+
 VERSION 0.1.5 (build 210)
 Released on August 28, 2011
 	- [NEW] SCEvents is no longer a singleton.
