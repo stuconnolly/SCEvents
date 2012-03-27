@@ -1,6 +1,10 @@
 SCEVENTS VERSION HISTORY
 ------------------------
 
+VERSION 0.1.7 (build 216)
+Released on March 27, 2012
+	- [FIX] Fix potential overrelease that could lead to an application crash (Bryan Jones).
+
 VERSION 0.1.6 (build 213)
 Released on August 31, 2011
 	- [FIX] Fix incorrect use of function to detect trailing slash on event paths.
