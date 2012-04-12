@@ -169,7 +169,7 @@ static CFStringRef _strip_trailing_slash_from_path(CFStringRef path);
 	
 	_runLoop = [runLoop getCFRunLoop];
 	
-    if (([paths count] == 0) || (_isWatchingPaths)) {
+    if ([paths count] == 0 || _isWatchingPaths) {
 		pthread_mutex_unlock(&_eventsLock);
 		
 		return NO;
@@ -204,7 +204,7 @@ static CFStringRef _strip_trailing_slash_from_path(CFStringRef path);
 	pthread_mutex_lock(&_eventsLock);
 	
     if (!_isWatchingPaths) {
-		pthread_mutex_lock(&_eventsLock);
+		pthread_mutex_unlock(&_eventsLock);
 		
 		return NO;
 	}
