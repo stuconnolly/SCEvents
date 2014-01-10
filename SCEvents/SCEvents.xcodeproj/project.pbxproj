@@ -203,6 +203,8 @@
 /* Begin PBXProject section */
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "SCEvents" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -354,6 +356,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = SCEvents;
+				SDKROOT = macosx;
 			};
 			name = Development;
 		};
@@ -370,6 +373,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = SCEvents;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -410,7 +414,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 ppc ppc64 x86_64";
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -451,7 +455,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = macosx;
 				VALID_ARCHS = "i386 ppc ppc64 x86_64";
 				WARNING_CFLAGS = "-Wall";
 			};
