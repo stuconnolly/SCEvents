@@ -1,8 +1,6 @@
 /*
- *  $Id$
- *
  *  SCEvents
- *  http://stuconnolly.com/projects/code/
+ *  https://github.com/stuconnolly/scevents
  *
  *  Copyright (c) 2011 Stuart Connolly. All rights reserved.
  *
