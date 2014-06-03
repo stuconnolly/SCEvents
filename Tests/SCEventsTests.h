@@ -28,7 +28,7 @@
  *  OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 #import "SCEventListenerProtocol.h"
 
 @class SCEvents;
@@ -40,7 +40,7 @@
  *
  * SCEvents tests class.
  */
-@interface SCEventsTests : SenTestCase <SCEventListenerProtocol>
+@interface SCEventsTests : XCTestCase <SCEventListenerProtocol>
 {
 	SCEvents *_watcher;
 	

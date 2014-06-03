@@ -73,22 +73,22 @@ static SCEventFlags SCEventTestFlags = SCEventStreamEventFlagNone;
 
 - (void)testEventId
 {
-	STAssertEquals(_eventId, [_event eventId], nil);
+	XCTAssertEqual(_eventId, [_event eventId]);
 }
 
 - (void)testEventDate
 {
-	STAssertEquals(_eventDate, [_event eventDate], nil);
+	XCTAssertEqual(_eventDate, [_event eventDate]);
 }
 
 - (void)testEventPath
 {
-	STAssertEquals(_eventPath, [_event eventPath], nil);
+	XCTAssertEqual(_eventPath, [_event eventPath]);
 }
 
 - (void)testEventFlags
 {
-	STAssertEquals(SCEventStreamEventFlagNone, [_event eventFlags], nil);
+	XCTAssertEqual(SCEventStreamEventFlagNone, [_event eventFlags]);
 }
 
 @end

@@ -92,14 +92,14 @@ static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
 
 - (void)testStreamDescription
 {
-	STAssertTrue(([[_watcher streamDescription] length] > 0), nil);
+	XCTAssertTrue(([[_watcher streamDescription] length] > 0));
 }
 
 - (void)ignore_testEventNotifications
 {	
 	[_watcher flushEventStreamSync];
 	
-	STAssertTrue(_eventsOccurred > 0, nil);
+	XCTAssertTrue(_eventsOccurred > 0);
 }
 
 #pragma mark -

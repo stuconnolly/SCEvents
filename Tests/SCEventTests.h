@@ -28,7 +28,7 @@
  *  OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
 @class SCEvent;
 
@@ -39,7 +39,7 @@
  *
  * SCEvent tests class.
  */
-@interface SCEventTests : SenTestCase
+@interface SCEventTests : XCTestCase
 {
 	SCEvent *_event;
 	
