@@ -13,6 +13,7 @@
 		175387700DB9743C0017AE02 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 171953D90DB3FCFD00AAC8B8 /* SCEvent.m */; };
 		176B55C812EC8A630076CC40 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 171953D90DB3FCFD00AAC8B8 /* SCEvent.m */; };
 		176B55E712EC91BF0076CC40 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 171953FC0DB3FDFB00AAC8B8 /* SCEvents.m */; };
+		17C09319193E78FD0094B4E0 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17C09318193E78FD0094B4E0 /* XCTest.framework */; };
 		17F21F7F12EB6E560099D065 /* SCEventTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F44F5812E8F7F100F6F16C /* SCEventTests.m */; };
 		17F21F8012EB6E560099D065 /* SCEventsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 17F44F5B12E8F94A00F6F16C /* SCEventsTests.m */; };
 		8DD76F9A0486AA7600D96B5E /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* Events.m */; settings = {ATTRIBUTES = (); }; };
@@ -44,6 +45,7 @@
 		176B55B112EC873A0076CC40 /* SCEventTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEventTests.h; sourceTree = "<group>"; };
 		176B55E512EC91740076CC40 /* SCEventsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEventsTests.h; sourceTree = "<group>"; };
 		17BD47390DE855CC008FC970 /* VersionHistory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VersionHistory.txt; sourceTree = "<group>"; };
+		17C09318193E78FD0094B4E0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		17F21F7A12EB6E260099D065 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17F21F7B12EB6E260099D065 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		17F44F5812E8F7F100F6F16C /* SCEventTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEventTests.m; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17C09319193E78FD0094B4E0 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +100,7 @@
 		08FB779DFE84155DC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				17C09318193E78FD0094B4E0 /* XCTest.framework */,
 				171953DC0DB3FD3B00AAC8B8 /* CoreServices.framework */,
 				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
 			);
@@ -290,7 +294,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -316,7 +323,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_MODEL_TUNING = G5;
