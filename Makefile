@@ -1,5 +1,3 @@
-# $Id$
-
 CONFIG=Release
 
 BUILD_CONFIG?=$(CONFIG)
