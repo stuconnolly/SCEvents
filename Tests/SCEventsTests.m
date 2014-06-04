@@ -54,7 +54,7 @@ static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
 	
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSAllDomainsMask, YES);
 	
-	_pathToWatch  = ([paths count]) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
+	_pathToWatch  = [paths count] ? [paths objectAtIndex:0] : NSTemporaryDirectory();
 	
 	_pathToIgnore = [_pathToWatch stringByAppendingPathComponent:SCEventsDirectoryToIgnore];
 	_tempFilePath = [_pathToWatch stringByAppendingPathComponent:SCEventsTempFile];

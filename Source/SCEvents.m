@@ -231,7 +231,7 @@ static CFStringRef _strip_trailing_slash_from_path(CFStringRef path);
 {
 	pthread_mutex_lock(&_eventsLock);
 	
-	NSString *description = (_isWatchingPaths) ? (NSString *)FSEventStreamCopyDescription(_eventStream) : nil;
+	NSString *description = _isWatchingPaths ? (NSString *)FSEventStreamCopyDescription(_eventStream) : nil;
 	
 	pthread_mutex_unlock(&_eventsLock);
 	
@@ -370,7 +370,7 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 			// If present remove the path's trailing slash
 			eventPath = _strip_trailing_slash_from_path(eventPath);
 					
-			SCEvent *event = [SCEvent eventWithEventId:(NSUInteger)eventIds[i] 
+			SCEvent *event = [SCEvent eventWithEventId:eventIds[i]
 											 eventDate:[NSDate date] 
 											 eventPath:(NSString *)eventPath 
 											eventFlags:(SCEventFlags)eventFlags[i]];
