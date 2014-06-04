@@ -43,13 +43,13 @@ static NSString *SCEventsDownloadsDirectory = @"Downloads";
 {
 	if (_events) return;
 	
-    _events = [[SCEvents alloc] init];
-    
-    [_events setDelegate:self];
-    
-    NSMutableArray *paths = [NSMutableArray arrayWithObject:NSHomeDirectory()];
-    NSMutableArray *excludePaths = [NSMutableArray arrayWithObject:[NSHomeDirectory() stringByAppendingPathComponent:SCEventsDownloadsDirectory]];
-    
+	_events = [[SCEvents alloc] init];
+	
+	[_events setDelegate:self];
+	
+	NSMutableArray *paths = [NSMutableArray arrayWithObject:NSHomeDirectory()];
+	NSMutableArray *excludePaths = [NSMutableArray arrayWithObject:[NSHomeDirectory() stringByAppendingPathComponent:SCEventsDownloadsDirectory]];
+	
 	// Set the paths to be excluded
 	[_events setExcludedPaths:excludePaths];
 	
@@ -69,7 +69,7 @@ static NSString *SCEventsDownloadsDirectory = @"Downloads";
  */
 - (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event
 {
-    NSLog(@"%@", event);
+	NSLog(@"%@", event);
 }
 
 #pragma mark -

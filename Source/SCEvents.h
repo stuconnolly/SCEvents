@@ -42,18 +42,18 @@
  */
 @interface SCEvents : NSObject 
 {
-    id <NSObject, SCEventListenerProtocol> _delegate; 
-    
-    BOOL                 _isWatchingPaths;
-    BOOL                 _ignoreEventsFromSubDirs;
+	id <NSObject, SCEventListenerProtocol> _delegate; 
+	
+	BOOL                 _isWatchingPaths;
+	BOOL                 _ignoreEventsFromSubDirs;
 	CFRunLoopRef         _runLoop;
-    FSEventStreamRef     _eventStream;
-    CFTimeInterval       _notificationLatency;
+	FSEventStreamRef     _eventStream;
+	CFTimeInterval       _notificationLatency;
 	FSEventStreamEventId _resumeFromEventId;
-      
-    SCEvent              *_lastEvent;
-    NSArray              *_watchedPaths;
-    NSArray              *_excludedPaths;
+	  
+	SCEvent              *_lastEvent;
+	NSArray              *_watchedPaths;
+	NSArray              *_excludedPaths;
 	
 	pthread_mutex_t       _eventsLock;
 }

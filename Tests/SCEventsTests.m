@@ -47,18 +47,18 @@ static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
 
 - (void)setUp
 {
-    _watcher = [[SCEvents alloc] init];
-    
-    [_watcher setDelegate:self];
+	_watcher = [[SCEvents alloc] init];
+	
+	[_watcher setDelegate:self];
 	[_watcher setNotificationLatency:0.1];
 	
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDesktopDirectory, NSAllDomainsMask, YES);
-    
+	
 	_pathToWatch  = ([paths count]) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
 	
 	_pathToIgnore = [_pathToWatch stringByAppendingPathComponent:SCEventsDirectoryToIgnore];
 	_tempFilePath = [_pathToWatch stringByAppendingPathComponent:SCEventsTempFile];
-	    
+		
 	// Create the path to ignore
 	[self _createDirectoryAtPath:_pathToIgnore];
 	
@@ -105,7 +105,7 @@ static NSString *SCEventsDirectoryToIgnore = @"SCEventsTestsIgnore";
 
 - (void)pathWatcher:(SCEvents *)pathWatcher eventOccurred:(SCEvent *)event
 {
-    _eventsOccurred++;
+	_eventsOccurred++;
 }
 
 #pragma mark -

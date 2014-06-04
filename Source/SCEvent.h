@@ -40,10 +40,10 @@
  */
 @interface SCEvent : NSObject 
 {
-    NSUInteger _eventId;
-    NSDate *_eventDate;
-    NSString *_eventPath;
-    SCEventFlags _eventFlags;
+	NSUInteger _eventId;
+	NSDate *_eventDate;
+	NSString *_eventPath;
+	SCEventFlags _eventFlags;
 }
 
 /**

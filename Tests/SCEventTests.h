@@ -42,9 +42,9 @@
 	SCEvent *_event;
 	
 	NSUInteger _eventId;
-    NSDate *_eventDate;
-    NSString *_eventPath;
-    FSEventStreamEventFlags _eventFlags;
+	NSDate *_eventDate;
+	NSString *_eventPath;
+	FSEventStreamEventFlags _eventFlags;
 }
 
 /**

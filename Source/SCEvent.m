@@ -54,7 +54,7 @@
 					eventPath:(NSString *)path 
 				   eventFlags:(SCEventFlags)flags
 {
-    return [[[SCEvent alloc] initWithEventId:identifier eventDate:date eventPath:path eventFlags:flags] autorelease];
+	return [[[SCEvent alloc] initWithEventId:identifier eventDate:date eventPath:path eventFlags:flags] autorelease];
 }
 
 /**
@@ -72,14 +72,14 @@
 			eventPath:(NSString *)path 
 		   eventFlags:(SCEventFlags)flags
 {
-    if ((self = [super init])) {
-        [self setEventId:identifier];
-        [self setEventDate:date];
-        [self setEventPath:path];
-        [self setEventFlags:flags];
-    }
-    
-    return self;
+	if ((self = [super init])) {
+		[self setEventId:identifier];
+		[self setEventDate:date];
+		[self setEventPath:path];
+		[self setEventFlags:flags];
+	}
+	
+	return self;
 }
 
 #pragma mark -
@@ -104,10 +104,10 @@
 
 - (void)dealloc
 {
-    [_eventDate release], _eventDate = nil;
+	[_eventDate release], _eventDate = nil;
 	[_eventPath release], _eventPath = nil;
 	
-    [super dealloc];
+	[super dealloc];
 }
 
 @end

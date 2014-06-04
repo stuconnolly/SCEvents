@@ -31,27 +31,27 @@
 
 int main(int argc, const char *argv[]) 
 {
-    /**
+	/**
 	 * Please note that this program is merely an example of using the 
 	 * SCEvents wrapper and so the run loop created will run forever until
-     * it is terminated. 
-     *
-     * This program's contollrer (Controller.m) simply implements
-     * SCEventListenerProtocol and prints the events that SCEvents notifies
-     * it off. As an example, to generate some events simply run some appliacations 
-     * or create/edit some files under the root directory that is being
-     * watached (your home directory by default).
-     */
-    
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    Controller *controller = [[[Controller alloc] init] autorelease];
-    
-    [controller setupEventListener];
-    
-    [[NSRunLoop currentRunLoop] run];
-    
-    [pool release];
-    
-    return 0;
+	 * it is terminated. 
+	 *
+	 * This program's contollrer (Controller.m) simply implements
+	 * SCEventListenerProtocol and prints the events that SCEvents notifies
+	 * it off. As an example, to generate some events simply run some appliacations 
+	 * or create/edit some files under the root directory that is being
+	 * watached (your home directory by default).
+	 */
+	
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	Controller *controller = [[[Controller alloc] init] autorelease];
+	
+	[controller setupEventListener];
+	
+	[[NSRunLoop currentRunLoop] run];
+	
+	[pool release];
+	
+	return 0;
 }

@@ -76,17 +76,17 @@ static CFStringRef _strip_trailing_slash_from_path(CFStringRef path);
  */
 - (id)init
 {
-    if ((self = [super init])) {
-        _isWatchingPaths = NO;
+	if ((self = [super init])) {
+		_isWatchingPaths = NO;
 		
 		pthread_mutex_init(&_eventsLock, NULL);
-        
+		
 		[self setResumeFromEventId:kFSEventStreamEventIdSinceNow];
-        [self setNotificationLatency:SCEventsDefaultNotificationLatency];
-        [self setIgnoreEventsFromSubDirs:SCEventsDefaultIgnoreEventsFromSubDirs];
-    }
-    
-    return self;
+		[self setNotificationLatency:SCEventsDefaultNotificationLatency];
+		[self setIgnoreEventsFromSubDirs:SCEventsDefaultIgnoreEventsFromSubDirs];
+	}
+	
+	return self;
 }
 
 #pragma mark -
@@ -102,17 +102,17 @@ static CFStringRef _strip_trailing_slash_from_path(CFStringRef path);
 {
 	pthread_mutex_lock(&_eventsLock);
 	
-    if (!_isWatchingPaths) {
+	if (!_isWatchingPaths) {
 		pthread_mutex_unlock(&_eventsLock);
 		
 		return NO;
 	}
-    
-    FSEventStreamFlushSync(_eventStream);
-    
+	
+	FSEventStreamFlushSync(_eventStream);
+	
 	pthread_mutex_unlock(&_eventsLock);
 	
-    return YES;
+	return YES;
 }
 
 /**
@@ -123,19 +123,19 @@ static CFStringRef _strip_trailing_slash_from_path(CFStringRef path);
  */
 - (BOOL)flushEventStreamAsync
 {
-    pthread_mutex_lock(&_eventsLock);
+	pthread_mutex_lock(&_eventsLock);
 	
-    if (!_isWatchingPaths) {
+	if (!_isWatchingPaths) {
 		pthread_mutex_unlock(&_eventsLock);
 		
 		return NO;
 	}
-    
-    FSEventStreamFlushAsync(_eventStream);
-    
+	
+	FSEventStreamFlushAsync(_eventStream);
+	
 	pthread_mutex_unlock(&_eventsLock);
 	
-    return YES;
+	return YES;
 }
 
 /**
@@ -147,7 +147,7 @@ static CFStringRef _strip_trailing_slash_from_path(CFStringRef path);
  */
 - (BOOL)startWatchingPaths:(NSArray *)paths
 {
-    return [self startWatchingPaths:paths onRunLoop:[NSRunLoop currentRunLoop]];
+	return [self startWatchingPaths:paths onRunLoop:[NSRunLoop currentRunLoop]];
 }
 
 /**
@@ -167,27 +167,27 @@ static CFStringRef _strip_trailing_slash_from_path(CFStringRef path);
 	
 	_runLoop = [runLoop getCFRunLoop];
 	
-    if ([paths count] == 0 || _isWatchingPaths) {
+	if ([paths count] == 0 || _isWatchingPaths) {
 		pthread_mutex_unlock(&_eventsLock);
 		
 		return NO;
 	}
-    
-    [self setWatchedPaths:paths];
-    
+	
+	[self setWatchedPaths:paths];
+	
 	_eventStream = _create_events_stream(self, ((CFArrayRef)_watchedPaths), _notificationLatency, _resumeFromEventId);
-    
-    // Schedule the event stream on the supplied run loop
-    FSEventStreamScheduleWithRunLoop(_eventStream, _runLoop, kCFRunLoopDefaultMode);
-    
-    // Start the event stream
-    FSEventStreamStart(_eventStream);
-    
-    _isWatchingPaths = YES;
-    
+	
+	// Schedule the event stream on the supplied run loop
+	FSEventStreamScheduleWithRunLoop(_eventStream, _runLoop, kCFRunLoopDefaultMode);
+	
+	// Start the event stream
+	FSEventStreamStart(_eventStream);
+	
+	_isWatchingPaths = YES;
+	
 	pthread_mutex_unlock(&_eventsLock);
 	
-    return YES;
+	return YES;
 }
 
 /**
@@ -201,25 +201,25 @@ static CFStringRef _strip_trailing_slash_from_path(CFStringRef path);
 {
 	pthread_mutex_lock(&_eventsLock);
 	
-    if (!_isWatchingPaths) {
+	if (!_isWatchingPaths) {
 		pthread_mutex_unlock(&_eventsLock);
 		
 		return NO;
 	}
-	    
-    FSEventStreamStop(_eventStream);
+		
+	FSEventStreamStop(_eventStream);
 	
 	if (_runLoop) FSEventStreamUnscheduleFromRunLoop(_eventStream, _runLoop, kCFRunLoopDefaultMode);
 	
-    FSEventStreamInvalidate(_eventStream);
+	FSEventStreamInvalidate(_eventStream);
 	
 	if (_eventStream) FSEventStreamRelease(_eventStream), _eventStream = NULL;
-    
-    _isWatchingPaths = NO;
-    
+	
+	_isWatchingPaths = NO;
+	
 	pthread_mutex_unlock(&_eventsLock);
 	
-    return YES;
+	return YES;
 }
 
 /**
@@ -249,7 +249,7 @@ static CFStringRef _strip_trailing_slash_from_path(CFStringRef path);
  */
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@ { watchedPaths = %@, excludedPaths = %@ } >", [self className], _watchedPaths, _excludedPaths];
+	return [NSString stringWithFormat:@"<%@ { watchedPaths = %@, excludedPaths = %@ } >", [self className], _watchedPaths, _excludedPaths];
 }
 
 #pragma mark -
@@ -260,14 +260,14 @@ static CFStringRef _strip_trailing_slash_from_path(CFStringRef path);
 	
 	// Stop the event stream if it's still running
 	if (_isWatchingPaths) [self stopWatchingPaths];
-        
+		
 	pthread_mutex_destroy(&_eventsLock);
 	
 	[_lastEvent release], _lastEvent = nil;
-    [_watchedPaths release], _watchedPaths = nil;
-    [_excludedPaths release], _excludedPaths = nil;
-    
-    [super dealloc];
+	[_watchedPaths release], _watchedPaths = nil;
+	[_excludedPaths release], _excludedPaths = nil;
+	
+	[super dealloc];
 }
 
 #pragma mark -
@@ -289,8 +289,8 @@ static FSEventStreamRef _create_events_stream(SCEvents *watcher, CFArrayRef path
 	callbackInfo.retain  = NULL;
 	callbackInfo.release = NULL;
 	callbackInfo.copyDescription = NULL;
-    
-    return FSEventStreamCreate(kCFAllocatorDefault, 
+	
+	return FSEventStreamCreate(kCFAllocatorDefault, 
 							   &_events_callback,
 							   &callbackInfo, 
 							   paths, 
@@ -320,70 +320,70 @@ static void _events_callback(ConstFSEventStreamRef streamRef,
 							  const FSEventStreamEventFlags eventFlags[], 
 							  const FSEventStreamEventId eventIds[])
 {
-    NSUInteger i;
-    BOOL shouldIgnore = NO;
-    
+	NSUInteger i;
+	BOOL shouldIgnore = NO;
+	
 	CFArrayRef paths = (CFArrayRef)eventPaths;
-    SCEvents *pathWatcher = (SCEvents *)clientCallBackInfo;
-    
-    for (i = 0; i < numEvents; i++) 
+	SCEvents *pathWatcher = (SCEvents *)clientCallBackInfo;
+	
+	for (i = 0; i < numEvents; i++) 
 	{
-        /* Please note that we are estimating the date for when the event occurred 
-         * because the FSEvents API does not provide us with it. This date however
-         * should not be taken as the date the event actually occurred and more 
-         * appropriatly the date for when it was delivered to this callback function.
-         * Depending on what the notification latency is set to, this means that some
-         * events may have very close event dates because this callback is only called 
-         * once with events that occurred within the latency time.
-         *
-         * To get a more accurate date for when events occur, you could decrease the 
-         * notification latency from its default value. This means that this callback 
-         * will be called more frequently for events that just occur and reduces the
-         * number of events that are subsequntly delivered during one of these calls.
-         * The drawback to this approach however, is the increased resources required
-         * calling this callback more frequently.
-         */
+		/* Please note that we are estimating the date for when the event occurred 
+		 * because the FSEvents API does not provide us with it. This date however
+		 * should not be taken as the date the event actually occurred and more 
+		 * appropriatly the date for when it was delivered to this callback function.
+		 * Depending on what the notification latency is set to, this means that some
+		 * events may have very close event dates because this callback is only called 
+		 * once with events that occurred within the latency time.
+		 *
+		 * To get a more accurate date for when events occur, you could decrease the 
+		 * notification latency from its default value. This means that this callback 
+		 * will be called more frequently for events that just occur and reduces the
+		 * number of events that are subsequntly delivered during one of these calls.
+		 * The drawback to this approach however, is the increased resources required
+		 * calling this callback more frequently.
+		 */
 		
 		NSArray *excludedPaths = [pathWatcher excludedPaths];
-        CFStringRef eventPath = CFArrayGetValueAtIndex(paths, (CFIndex)i);
-        
-        // Check to see if the event should be ignored if it's path is in the exclude list
-        if ([excludedPaths containsObject:(NSString *)eventPath]) {
-            shouldIgnore = YES;
-        }
-        else {
-            // If we did not find an exact match in the exclude list and we are to ignore events from
-            // sub-directories then see if the exclude paths match as a prefix of the event path.
-            if ([pathWatcher ignoreEventsFromSubDirs]) {
-                for (NSString *path in [pathWatcher excludedPaths]) 
+		CFStringRef eventPath = CFArrayGetValueAtIndex(paths, (CFIndex)i);
+		
+		// Check to see if the event should be ignored if it's path is in the exclude list
+		if ([excludedPaths containsObject:(NSString *)eventPath]) {
+			shouldIgnore = YES;
+		}
+		else {
+			// If we did not find an exact match in the exclude list and we are to ignore events from
+			// sub-directories then see if the exclude paths match as a prefix of the event path.
+			if ([pathWatcher ignoreEventsFromSubDirs]) {
+				for (NSString *path in [pathWatcher excludedPaths]) 
 				{
 					if (CFStringHasPrefix(eventPath, (CFStringRef)path)) {
 						shouldIgnore = YES;
-                        break;
+						break;
 					}
-                }
-            }
-        }
-    
-        if (!shouldIgnore) {
+				}
+			}
+		}
+	
+		if (!shouldIgnore) {
 						
 			// If present remove the path's trailing slash
 			eventPath = _strip_trailing_slash_from_path(eventPath);
 					
-            SCEvent *event = [SCEvent eventWithEventId:(NSUInteger)eventIds[i] 
+			SCEvent *event = [SCEvent eventWithEventId:(NSUInteger)eventIds[i] 
 											 eventDate:[NSDate date] 
 											 eventPath:(NSString *)eventPath 
 											eventFlags:(SCEventFlags)eventFlags[i]];
 			
-            if ([[pathWatcher delegate] conformsToProtocol:@protocol(SCEventListenerProtocol)]) {
-                [[pathWatcher delegate] pathWatcher:pathWatcher eventOccurred:event];
-            }
-                
-            if (i == (numEvents - 1)) {
-                [pathWatcher setLastEvent:event];
-            }
-        }
-    }
+			if ([[pathWatcher delegate] conformsToProtocol:@protocol(SCEventListenerProtocol)]) {
+				[[pathWatcher delegate] pathWatcher:pathWatcher eventOccurred:event];
+			}
+				
+			if (i == (numEvents - 1)) {
+				[pathWatcher setLastEvent:event];
+			}
+		}
+	}
 }
 
 /**
