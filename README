@@ -1,8 +1,8 @@
 OVERVIEW
 
     SCEvents is a simple Objective-C wrapper for Mac OS X's FSEvents C API:
-	
-	https://developer.apple.com/library/mac/documentation/Darwin/Conceptual/FSEvents_ProgGuide
+    
+    https://developer.apple.com/library/mac/documentation/Darwin/Conceptual/FSEvents_ProgGuide
 
 GIT
     <https://github.com/stuconnolly/scevents>
