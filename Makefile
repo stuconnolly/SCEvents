@@ -17,6 +17,9 @@ test:
 clean:
 	xcodebuild -project SCEvents.xcodeproj -configuration "$(BUILD_CONFIG)" clean
 
+analyze:
+	xcodebuild -project SCEvents.xcodeproj -scheme SCEvents -configuration "$(BUILD_CONFIG)" CFLAGS="$(FLAGS)" analyze
+
 dist:
 	find . | grep .DS_Store > "$(EX)"; \
 	find . | grep .*\.git.* >> "$(EX)"; \
