@@ -44,8 +44,10 @@
 		1769EEB413087F2300B39A9A /* SCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCConstants.h; sourceTree = "<group>"; };
 		176B55B112EC873A0076CC40 /* SCEventTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEventTests.h; sourceTree = "<group>"; };
 		176B55E512EC91740076CC40 /* SCEventsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEventsTests.h; sourceTree = "<group>"; };
-		17BD47390DE855CC008FC970 /* VersionHistory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = VersionHistory.txt; sourceTree = "<group>"; };
+		17BD47390DE855CC008FC970 /* VersionHistory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = VersionHistory.txt; path = Resources/VersionHistory.txt; sourceTree = "<group>"; };
 		17C09318193E78FD0094B4E0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		17C0931A194477DE0094B4E0 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		17C0931B194477F10094B4E0 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		17F21F7A12EB6E260099D065 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		17F21F7B12EB6E260099D065 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		17F44F5812E8F7F100F6F16C /* SCEventTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEventTests.m; sourceTree = "<group>"; };
@@ -78,6 +80,9 @@
 		08FB7794FE84155DC02AAC07 /* SCEvents */ = {
 			isa = PBXGroup;
 			children = (
+				17C0931B194477F10094B4E0 /* LICENSE */,
+				17C0931A194477DE0094B4E0 /* README */,
+				17BD47390DE855CC008FC970 /* VersionHistory.txt */,
 				08FB7795FE84155DC02AAC07 /* Source */,
 				17F44F5212E8F69600F6F16C /* Tests */,
 				17BD472C0DE85550008FC970 /* Resources */,
@@ -134,7 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				17F21F7B12EB6E260099D065 /* Tests-Info.plist */,
-				17BD47390DE855CC008FC970 /* VersionHistory.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
