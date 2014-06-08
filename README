@@ -1,0 +1,19 @@
+OVERVIEW
+
+    devbot is a simple Objective-C wrapper around Mac OS X's FSEvents C API:
+	
+	https://developer.apple.com/library/mac/documentation/Darwin/Conceptual/FSEvents_ProgGuide
+
+GIT
+    <https://github.com/stuconnolly/scevents>
+
+AUTHOR
+
+    Stuart Connolly <stuart02 [at] gmail [dot] com>
+
+COPYRIGHT & LICENSE
+    
+    Copyright (c) 2008-2014 Stuart Connolly. All rights reserved.
+
+    SECvents is free and open source software, licensed under MIT.
+    See LICENSE for full details.
